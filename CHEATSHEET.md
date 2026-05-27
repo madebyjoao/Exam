@@ -80,6 +80,53 @@
 | `highlight-blue` | blue highlight |
 | `semi-fade-out` | partial fade |
 
+**Fragment ordering gotchas**
+
+**1. Always use explicit `index` props when mixing static and dynamic fragments.**
+
+Reveal.js calls `sortAll()` during initialisation. If it runs before dynamically-rendered fragments (e.g. a `.map()` list) are committed to the DOM, it assigns low indices to whatever fragments it finds first (e.g. a static right-column block). On the next `sort()` call those static fragments already have explicit `data-fragment-index` attributes, so the sort algorithm puts them in a sparse array `n` and fills the rest from a plain array `r`. Because `Array.forEach` **skips holes**, `n[6]` gets processed before `r[0]`, giving the right column a lower step number than the list items.
+
+Fix: give every fragment an explicit `index` so `data-fragment-index` is written to the DOM on the initial React commit, before any Reveal.js effect runs.
+
+```jsx
+// list — explicit sequential indices
+{items.map((item, i) => (
+  <Fragment key={item} as="li" animation="fade-right" index={i}>
+    {item}
+  </Fragment>
+))}
+
+// right column — continue the sequence
+<Fragment index={6}>
+  <p>Title always visible once column appears</p>
+  <Fragment index={7} className="...">
+    <Code>...</Code>
+  </Fragment>
+</Fragment>
+```
+
+**2. Don't wrap a column in an outer `<Fragment>` that also contains inner fragments.**
+
+The outer wrapper reveals first as an empty shell (inner items are still hidden fragments), then items appear one by one. Keep the column `<div>` always visible and fragment only the items.
+
+```jsx
+// bad — outer Fragment shows an empty column shell first
+<Fragment>
+  <div>
+    <ul>
+      <Fragment as="li" index={0}>item</Fragment>
+    </ul>
+  </div>
+</Fragment>
+
+// good — column always visible, only items are fragments
+<div>
+  <ul>
+    <Fragment as="li" index={0}>item</Fragment>
+  </ul>
+</div>
+```
+
 ---
 
 ### `<Stack>` — vertical slide group
