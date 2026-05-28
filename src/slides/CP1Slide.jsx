@@ -8,7 +8,7 @@ export default function CP1Slide() {
                 <h2 className="text-3xl font-bold text-white">Environnement de travail</h2>
             </div>
             <div className="grid grid-cols-3 gap-4 text-left">
-                <div asChild>
+                <Fragment asChild>
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                         <p className="text-blue-400 font-semibold mb-2">Front-end</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none">
@@ -18,7 +18,7 @@ export default function CP1Slide() {
                             <li>🔍 ESLint</li>
                         </ul>
                     </div>
-                </div>
+                </Fragment>
                 <Fragment asChild>
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                         <p className="text-orange-400 font-semibold mb-2">Back-end</p>

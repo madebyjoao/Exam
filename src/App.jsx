@@ -19,6 +19,7 @@ import CP7Slide from './slides/CP7Slide';
 import CP8Slide from './slides/CP8Slide';
 import DemoSlide from './slides/DemoSlide';
 import ConclusionSlide from './slides/ConclusionSlide';
+import CP5_1Slide from './slides/CP5.1Slide';
 
 export default function App() {
     return (
@@ -30,6 +31,7 @@ export default function App() {
                 progress: true,
                 transition: 'slide',
                 backgroundTransition: 'fade',
+                center: false,
             }}
         >
             <TitleSlide />
@@ -44,6 +46,7 @@ export default function App() {
 
             <AT2DividerSlide />
             <CP5Slide />
+            <CP5_1Slide />
             <CP6Slide />
             <CP7Slide />
             <CP8Slide />
