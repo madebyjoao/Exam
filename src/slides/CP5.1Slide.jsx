@@ -13,7 +13,7 @@ export default function CP5_1Slide() {
     return (
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div className="flex items-center gap-3 mb-5">
-                <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5.1</span>
+                <span className="absolute bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5.1</span>
                 <h2 className="text-3xl font-bold text-white">Base de données relationnelle</h2>
             </div>
             <div className="grid grid-cols-2 gap-5 text-left text-sm">
@@ -24,9 +24,9 @@ export default function CP5_1Slide() {
 						{tables.map((table, index) => {        
                             // console.log('Rendering item:', table, 'at index:', index);              
 							return (
-                            <Fragment key={table} as="li" animation="fade-right" index={index}>
-								<div className='flex gap-2 items-center'><FolderOpen /> <code className="text-blue-300">{table}</code></div>
-							</Fragment>
+                                <Fragment key={table} as="li" animation="fade-right" index={index}>
+                                    <div className='flex gap-2 items-center'><FolderOpen /> <code className="text-blue-300">{table}</code></div>
+                                </Fragment>
                             );
                         })}
 					</ul>

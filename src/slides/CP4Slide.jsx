@@ -14,7 +14,7 @@ export default function CP4Slide() {
                 {/* Row 1, Col 1 — TanStack Query (first half) */}
                 <Fragment asChild>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-4 col-span-2 h-fit">
-                        <p className="text-purple-400 font-semibold mb-2">TanStack Query</p>
+                        <p className="text-purple-400 font-semibold mb-2">TanStack Query <span className='text-black text-xl'>INSERT DOSSIER PAGE</span></p>
                         <div className='grid grid-cols-2 grid-rows-1 h-fit'>
                             <div className="">                            
                                 <ul className="text-slate-300 space-y-1 list-none">
