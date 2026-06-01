@@ -3,28 +3,28 @@ import { DatabaseZap, FolderOpen } from 'lucide-react';
 import MLD from "../assets/MPD.png"
 
 export default function CP5Slide() {
+
+    const notes = `5 tables principales : users, portfolios, projects, project_images, et certificates.
+
+La relation centrale est users → portfolios : un utilisateur peut avoir 1 portfolio. Chaque portfolio contient des projets et des certificats — deux entités indépendantes rattachées au portfolio, pas à l'utilisateur directement.
+
+Les projets ont leur propre galerie via project_images, avec un order_index pour contrôler l'ordre d'affichage manuellement.
+
+Points notables du schéma :
+- Le champ slug dans portfolios permet des URLs propres et personnalisées.
+- Les champs technologies sont stockés en JSON dans projects et portfolios — choix délibéré pour éviter une table de jointure technologies et rester flexible.
+- Les champs font dans portfolios permettent la personnalisation typographique par portfolio.
+- is_published et is_public ont comme valuer 1 ou 0 qui agissent comme booléens — contrôle de visibilité à deux niveaux.
+- Le champ role dans users et type dans certificates utilisent des ENUM — les valeurs sont contraintes côté base.
+- 8 fichiers de migration sequelize `
+
     return (
-        <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
+        <Slide backgroundImage={MLD} backgroundSize="80%" backgroundPosition="center" backgroundRepeat="no-repeat">
             
-            <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="absolute left-0 bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
-                <h3
-                 className="text-3xl font-bold text-white">
-                    Base de données relationnelle
-                 </h3>
-            </div>
-            <Fragment>
-                <div className="flex flex-col justify-center h-[70vh] mt-10">
-                    <span className="text-3xl font-bold text-white">Base de données relationnelle</span>
-                    <img
-                    className='h-full object-contain'
-                    src={MLD}
-                    alt="Model"
-                />
-                </div>
-                
-            </Fragment>
-            <aside className="notes">8 fichiers de migration pour l'évolution du schéma. Mentionner les foreign keys et les ENUM pour les rôles.</aside>
+            
+            <aside className="notes text-lg">
+                <pre><code>{notes}</code></pre>
+            </aside>
         </Slide>
     );
 }
