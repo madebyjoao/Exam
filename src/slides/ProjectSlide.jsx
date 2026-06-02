@@ -7,17 +7,17 @@ export default function ProjectSlide() {
             <div className="grid grid-cols-2 gap-6 text-left">
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
                     <p className="text-blue-400 font-semibold mb-3 text-lg">Objectif</p>
-                    <Fragment as="p" className="text-slate-300 text-base">
+                    <div as="p" className="text-slate-300 text-base">
                         Permettre à des clients de créer, personnaliser et publier leur portfolio via une URL unique <code className="text-blue-300">/u/:slug</code>
-                    </Fragment>
+                    </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
                     <p className="text-green-400 font-semibold mb-3 text-lg">Utilisateurs</p>
-                    <Fragment as="ul" className="text-slate-300 text-sm space-y-1 list-none">
+                    <div as="ul" className="text-slate-300 text-sm space-y-1 list-none">
                         <li>👤 <strong>CLIENT</strong> — gère son portfolio dans le Builder</li>
                         <li>🛡️ <strong>ADMIN</strong> — tableau de bord, gestion des utilisateurs</li>
                         <li>🌐 <strong>Visiteur</strong> — consulte les portfolios publics</li>
-                    </Fragment>
+                    </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
                     <p className="text-purple-400 font-semibold mb-3 text-lg">Front-end</p>

@@ -4,6 +4,7 @@ import RevealNotes from 'reveal.js/plugin/notes';
 import 'reveal.js/reveal.css';
 import 'reveal.js/theme/black.css';
 import 'reveal.js/plugin/highlight/monokai.css';
+import './index.css';
 
 import TitleSlide from './slides/TitleSlide';
 import ProjectSlide from './slides/ProjectSlide';
@@ -20,6 +21,7 @@ import CP8Slide from './slides/CP8Slide';
 import DemoSlide from './slides/DemoSlide';
 import ConclusionSlide from './slides/ConclusionSlide';
 import CP5_1Slide from './slides/CP5.1Slide';
+import Roadmap from './slides/Roadmap';
 
 export default function App() {
     return (
@@ -33,25 +35,51 @@ export default function App() {
                 backgroundTransition: 'fade',
                 center: false,
             }}
-        >
+        >   
+            {/* Debout de la presentation petit slide avec le non do project et presentation de soi meme */}
             <TitleSlide />
+
+            {/* Illustrer le parcours de la presentation */}
+            <Roadmap />
+
+            {/*  */}
             <ProjectSlide />
 
+            {/*  */}
             <AT1DividerSlide />
+            <AT2DividerSlide />
 
+            {/* Installer et configurer son environnement de travail en fonction du projet web ou web mobile */}
             <CP1Slide />
+
+            {/* Maquetter des interfaces utilisateur web ou web mobile */}
             <CP2Slide />
+
+            {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
             <CP3Slide />
+            
+            {/* Développer la partie dynamique des interfaces utilisateur web ou web mobile */}
             <CP4Slide />
 
-            <AT2DividerSlide />
+            {/* Mettre en place une base de données relationnelle */}
             <CP5Slide />
+
+            {/*  */}
             <CP5_1Slide />
+
+            {/* Développer des composants d’accès aux données SQL et NoSQL */}
             <CP6Slide />
+
+            {/* Développer des composants métier coté serveur */}
             <CP7Slide />
+
+            {/* Documenter le déploiement d’une application dynamique web ou web mobile */}
             <CP8Slide />
 
+            {/*  */}
             <DemoSlide />
+
+            {/*  */}
             <ConclusionSlide />
         </Deck>
     );
