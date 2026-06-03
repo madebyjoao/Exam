@@ -9,13 +9,15 @@ export default function AT2DividerSlide() {
                 </span>
                 <h2 className="text-5xl font-black text-white text-center leading-tight">
                     Développer la partie<br />
-                    <span className="text-purple-400">back-end</span>
+                    <span className="text-red-600">back-end</span>
                 </h2>
-                <p className="text-slate-400 text-xl">d'une application web sécurisée</p>
-                <div className="flex gap-4 mt-6 text-sm text-slate-500">
+                <p className="text-white text-md">d'une application web sécurisée</p>
+                <div className="flex gap-4 mt-6 text-md text-red-500">
                     <span>CP5 · CP6 · CP7 · CP8</span>
-                </div>
+                </div>^^^^^^^^^^^^^^^^^^
             </div>
+
+           
         </Slide>
     );
 }

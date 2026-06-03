@@ -31,9 +31,9 @@ export default function CP1Slide() {
                     </div>
                 </Fragment>
                 <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <p className="text-purple-400 font-semibold mb-2">Base de données</p>
-                        <ul className="text-slate-300 text-sm space-y-1 list-none">
+                    <div className="bg-white/5 border border-white/10 rounded-xl py-4">
+                        <p className="text-purple-400 font-semibold mb-0">Base de données</p>
+                        <ul className="text-slate-300 text-sm space-y-1 list-none px-4">
                             <li>🐬 MySQL 8</li>
                             <li>📦 Variables .env</li>
                             <li>🌱 Seeders</li>
@@ -42,7 +42,13 @@ export default function CP1Slide() {
                     </div>
                 </Fragment>
             </div>
-            <aside className="notes">Expliquer le choix de Vite vs CRA, et pourquoi Node 24 + Express 5.</aside>
+             <aside className='notes'>
+
+                - Frontend: React 19, Vite, React Router, TanStack Query, Tailwind CSS 4
+                - Backend: Express 5, Sequelize, MySQL, JWT auth, Multer, Sharp
+                - Tooling: Nodemon, ESLint
+
+            </aside>
         </Slide>
     );
 }

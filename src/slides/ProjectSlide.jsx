@@ -1,4 +1,5 @@
 import { Slide, Fragment } from '@revealjs/react';
+import { Globe, Server, Target, User2, Users, UserStar, Wallpaper } from 'lucide-react';
 
 export default function ProjectSlide() {
     return (
@@ -6,21 +7,21 @@ export default function ProjectSlide() {
             <h2 className="text-4xl font-bold text-white mb-8">Présentation du projet</h2>
             <div className="grid grid-cols-2 gap-6 text-left">
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p className="text-blue-400 font-semibold mb-3 text-lg">Objectif</p>
+                    <p className="flex items-center gap-2 text-purple-400 font-semibold mb-3 text-lg"><Target  />Objectif</p>
                     <div as="p" className="text-slate-300 text-base">
-                        Permettre à des clients de créer, personnaliser et publier leur portfolio via une URL unique <code className="text-blue-300">/u/:slug</code>
+                        Permettre à des clients de créer, personnaliser et publier leur portfolio via une URL unique <code className="text-black">/u/:slug</code>
                     </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p className="text-green-400 font-semibold mb-3 text-lg">Utilisateurs</p>
+                    <p className="flex items-center gap-2 text-green-400 font-semibold mb-3 text-lg"><Users />Utilisateurs</p>
                     <div as="ul" className="text-slate-300 text-sm space-y-1 list-none">
-                        <li>👤 <strong>CLIENT</strong> — gère son portfolio dans le Builder</li>
-                        <li>🛡️ <strong>ADMIN</strong> — tableau de bord, gestion des utilisateurs</li>
-                        <li>🌐 <strong>Visiteur</strong> — consulte les portfolios publics</li>
+                        <li className='flex items-center gap-2'><User2  /> <strong className='text-lg'>CLIENT</strong> — gère son portfolio dans le Builder</li>
+                        <li className='flex items-center gap-2'><UserStar  /> <strong className='text-lg'>ADMIN</strong> — tableau de bord, gestion des utilisateurs</li>
+                        <li className='flex items-center gap-2'><Globe  /> <strong className='text-lg'>Visiteur</strong> — consulte les portfolios publics</li>
                     </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p className="text-purple-400 font-semibold mb-3 text-lg">Front-end</p>
+                    <p className="flex items-center gap-2 text-blue-500 font-bold mb-3 text-3xl"><Wallpaper />Front-end</p>
                     <ul className="text-slate-300 text-sm space-y-1 list-none">
                         <li>React 19 + Vite + React Router</li>
                         <li>TanStack Query · Tailwind CSS 4</li>
@@ -28,7 +29,7 @@ export default function ProjectSlide() {
                     </ul>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p className="text-orange-400 font-semibold mb-3 text-lg">Back-end</p>
+                    <p className="flex items-center gap-2 text-red-600 font-bold mb-3 text-3xl"><Server />Back-end</p>
                     <ul className="text-slate-300 text-sm space-y-1 list-none">
                         <li>Express 5 + Sequelize ORM</li>
                         <li>MySQL 8 · JWT · Multer + Sharp</li>
@@ -36,6 +37,9 @@ export default function ProjectSlide() {
                     </ul>
                 </div>
             </div>
+            <aside className='notes'>
+                bla bla
+            </aside>
         </Slide>
     );
 }

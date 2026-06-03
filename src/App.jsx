@@ -22,6 +22,7 @@ import DemoSlide from './slides/DemoSlide';
 import ConclusionSlide from './slides/ConclusionSlide';
 import CP5_1Slide from './slides/CP5.1Slide';
 import Roadmap from './slides/Roadmap';
+import CP5_2Slide from './slides/CP5.2Slide';
 
 export default function App() {
     return (
@@ -54,24 +55,25 @@ export default function App() {
 
             {/* Maquetter des interfaces utilisateur web ou web mobile */}
             <CP2Slide />
-
-            {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
-            <CP3Slide />
             
-            {/* Développer la partie dynamique des interfaces utilisateur web ou web mobile */}
-            <CP4Slide />
-
             {/* Mettre en place une base de données relationnelle */}
             <CP5Slide />
 
             {/*  */}
             <CP5_1Slide />
+            <CP5_2Slide />
 
             {/* Développer des composants d’accès aux données SQL et NoSQL */}
             <CP6Slide />
 
+            {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
+            <CP3Slide />
+
             {/* Développer des composants métier coté serveur */}
             <CP7Slide />
+
+            {/* Développer la partie dynamique des interfaces utilisateur web ou web mobile */}
+            <CP4Slide />            
 
             {/* Documenter le déploiement d’une application dynamique web ou web mobile */}
             <CP8Slide />

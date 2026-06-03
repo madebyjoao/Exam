@@ -2,7 +2,7 @@ import { Slide, Fragment, Code } from '@revealjs/react';
 import { DatabaseZap, FolderOpen } from 'lucide-react';
 import MLD from "../assets/MPD.png"
 
-export default function CP5Slide() {
+export default function CP5_2Slide() {
     return (
         <Slide backgroundImage={MLD} backgroundSize="90%" backgroundPosition="center" backgroundRepeat="no-repeat">
             

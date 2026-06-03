@@ -6,7 +6,7 @@ export default function Roadmap() {
             <h2 className="">Roadmap</h2>
             
             <div className="bg-black/5 p-5 text-left text-(--roadmap-text) backdrop-blur shadow-md">
-                <p className="text-(--roadmap-text) font-semibold mb-3 text-lg">Explication du projet</p>
+                <p className="text-(--roadmap-text) font-semibold mb-3 text-lg">Présentation du projet</p>
                 <p className="font-semibold mb-3 text-lg">Activité type 1</p>
                 <p className="font-semibold mb-3 text-lg">Activité type 2</p>
                 <p className="font-semibold mb-3 text-lg">CP1 · Environnement de travail</p>
