@@ -1,6 +1,20 @@
 import { Slide, Fragment } from '@revealjs/react';
+import { Atom, Database, HardDriveDownload, Hexagon, Palette, RefreshCcw, Sprout, Superscript, Zap } from 'lucide-react';
 
 export default function CP1Slide() {
+
+    const notes =`- Frontend: - reactjs project build with vite, 
+    - use of React-router dependency for for our navigation router;
+    - Tanstack Query dependency because it eliminates the need for manual data fetching;
+- Backend: -NodeJs pour une question de convenience est la stack que je me sent le plus confortable;
+- use Express.js because its a high-performance framework for building web APIs and server-side applications in Node.js;
+- use MySQL + Sequelize pour une question de securite vue que sequilize donne sanitazation des donnes, 
+system de migration, gere les relation entre table (hasMany ou belongsTo)
+     JWT auth, Multer, Sharp
+- Tooling: Nodemon, ESLint
+    
+    `
+
     return (
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div className="flex items-center gap-3 mb-6">
@@ -8,45 +22,44 @@ export default function CP1Slide() {
                 <h2 className="text-3xl font-bold text-white">Environnement de travail</h2>
             </div>
             <div className="grid grid-cols-3 gap-4 text-left">
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <p className="text-blue-400 font-semibold mb-2">Front-end</p>
+                <div asChild>
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 min-h-60">
+                        <p className="text-blue-500 font-semibold mb-2">Front-end</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none">
-                            <li>⚡ Vite — build tool</li>
-                            <li>⚛️ React 19</li>
-                            <li>🎨 Tailwind CSS 4</li>
-                            <li>🔍 ESLint</li>
+                            <li className="flex items-center gap-2"><Zap /> Vite — build tool</li>
+                            <li className="flex items-center gap-2"><Atom /> ReactJS</li>
+                            <li className="flex items-center gap-2"><Palette /> Tailwind CSS</li>
                         </ul>
                     </div>
-                </Fragment>
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <p className="text-orange-400 font-semibold mb-2">Back-end</p>
+                </div>
+                <div asChild>
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 min-h-60">
+                        <p className="text-red-600 font-semibold mb-2">Back-end</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none">
-                            <li>🟢 Node.js 24</li>
-                            <li>🚂 Express 5</li>
-                            <li>🔄 Nodemon</li>
-                            <li>🗃️ Sequelize CLI</li>
+                            <li className="flex items-center gap-2"><Hexagon /> Node.js + Express</li>
+                            <li className="flex items-center gap-2"><Superscript />Express 5</li>
+                            <li className="flex items-center gap-2"><RefreshCcw /> Nodemon</li>
                         </ul>
                     </div>
-                </Fragment>
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl py-4">
-                        <p className="text-purple-400 font-semibold mb-0">Base de données</p>
+                </div>
+                <div asChild>
+                    <div className="bg-white/5 border border-white/10 rounded-xl py-4 min-h-60">
+                        <p className="text-purple-600 font-semibold mb-0">Base de données</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none px-4">
-                            <li>🐬 MySQL 8</li>
-                            <li>📦 Variables .env</li>
-                            <li>🌱 Seeders</li>
-                            <li>📜 Migrations</li>
+                            <li className="flex items-center gap-2"><Database />MySQL + Sequelize-cli</li>
+                            <li className="flex items-center gap-2"><Sprout /> Seeders</li>
+                            <li className="flex items-center gap-2"><HardDriveDownload /> Migrations</li>
                         </ul>
                     </div>
-                </Fragment>
+                </div>
             </div>
              <aside className='notes'>
 
-                - Frontend: React 19, Vite, React Router, TanStack Query, Tailwind CSS 4
-                - Backend: Express 5, Sequelize, MySQL, JWT auth, Multer, Sharp
-                - Tooling: Nodemon, ESLint
+                <pre>
+                    <code>
+                        {notes}
+                    </code>
+                </pre>
 
             </aside>
         </Slide>

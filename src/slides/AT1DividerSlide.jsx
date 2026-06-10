@@ -1,15 +1,11 @@
 import { Slide } from '@revealjs/react';
 
 export default function AT1DividerSlide() {
-    const notes = `AT1 - Développer la partie front-end d’une application web 
-ou web mobile sécurisée ->
-CP1 - Installer et configurer son environnement de travail en
-fonction du projet web ou web mobile ->
-CP2 - Maquetter des interfaces utilisateur web ou web mobile ->
-CP3 - Réaliser des interfaces utilisateur statiques web ou web 
-mobile ->
-CP4 - Développer la partie dynamique des interfaces
-utilisateur web ou web mobile`
+    const notes = `AT1 - Développer la partie front-end d’une application web ou web mobile sécurisée ->
+CP1 - Installer et configurer son environnement de travail en fonction du projet web ou web mobile ->
+CP2 - Maquetter des interfaces utilisateur web ou web mobile 
+CP3 - Réaliser des interfaces utilisateur statiques web ou web mobile ->
+CP4 - Développer la partie dynamique des interfaces utilisateur web ou web mobile`
     return (
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div className="flex flex-col items-center justify-center h-full gap-4">

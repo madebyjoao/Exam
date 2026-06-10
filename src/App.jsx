@@ -23,6 +23,8 @@ import ConclusionSlide from './slides/ConclusionSlide';
 import CP5_1Slide from './slides/CP5.1Slide';
 import Roadmap from './slides/Roadmap';
 import CP5_2Slide from './slides/CP5.2Slide';
+import CP2_1Slide from './slides/CP2.1Slide';
+import CP2_2Slide from './slides/CP2.2Slide';
 
 export default function App() {
     return (
@@ -55,6 +57,8 @@ export default function App() {
 
             {/* Maquetter des interfaces utilisateur web ou web mobile */}
             <CP2Slide />
+            <CP2_1Slide />
+            <CP2_2Slide />
             
             {/* Mettre en place une base de données relationnelle */}
             <CP5Slide />
