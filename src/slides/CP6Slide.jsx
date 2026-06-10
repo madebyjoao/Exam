@@ -10,7 +10,7 @@ export default function CP6Slide() {
             <div className="grid grid-cols-2 gap-5 text-sm">
                 <div>
                     <p className="text-blue-400 font-semibold mb-3 text-left">Modèle User</p>
-                    <Code language="js" lineNumbers="1-6|7-12">
+                    <Code language="js" lineNumbers="1-12">
                         {`const User = sequelize.define("User", {
                         email: {
                             type: DataTypes.STRING(255),

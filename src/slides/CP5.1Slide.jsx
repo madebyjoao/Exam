@@ -1,59 +1,36 @@
 import { Slide, Fragment, Code } from '@revealjs/react';
 import { DatabaseZap, FolderOpen } from 'lucide-react';
+import MLD from "../assets/MPD.png"
+
 
 export default function CP5_1Slide() {
-    const tables = ['users', 'portfolios', 'projects', 'project_images', 'certificates'];
-    const sqlNote = `CREATE TABLE \`users\` (
-    \`id\` INT AUTO_INCREMENT PRIMARY KEY,
-    \`email\` VARCHAR(255) UNIQUE NOT NULL,
-    \`role\` ENUM('ADMIN', 'CLIENT') DEFAULT 'CLIENT',
-    \`password\` VARCHAR(255)
-    );`;
-    
+
+
+
+    const notes = `5 tables principales : users, portfolios, projects, project_images, et certificates.
+
+La relation centrale est users → portfolios : un utilisateur peut avoir 1 portfolio. Chaque portfolio contient des projets et des certificats — deux entités indépendantes rattachées au portfolio, pas à l'utilisateur directement.
+
+Les projets ont leur propre galerie via project_images, avec un order_index pour contrôler l'ordre d'affichage manuellement.
+
+Points notables du schéma :
+- Le champ slug dans portfolios permet des URLs propres et personnalisées.
+- Les champs technologies sont stockés en JSON dans projects et portfolios — choix délibéré pour éviter une table de jointure technologies et rester flexible.
+- Les champs font dans portfolios permettent la personnalisation typographique par portfolio.
+- is_published et is_public ont comme valuer 1 ou 0 qui agissent comme booléens — contrôle de visibilité à deux niveaux.
+- Le champ role dans users et type dans certificates utilisent des ENUM — les valeurs sont contraintes côté base.
+- 8 fichiers de migration sequelize `
+
     return (
-        <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
+        <Slide backgroundImage={MLD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
+            
             <div className="flex items-center gap-3 mb-5">
-                <span className="absolute bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5.1</span>
-                <h2 className="text-3xl font-bold text-white">Base de données relationnelle</h2>
+                <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
+                <h3 className="text-xl font-bold text-white">Base de données relationnelle</h3>
             </div>
-            <div className="grid grid-cols-2 gap-5 text-left text-sm">
-				<div>
-					<p className="flex gap-2 items-center text-purple-400 font-semibold mb-3"><DatabaseZap />Schéma — 5 tables</p>
-					<style>{`.cp5-list li { list-style: none !important; }`}</style>
-					<ul className="cp5-list text-slate-300 space-y-1">
-						{tables.map((table, index) => {        
-                            // console.log('Rendering item:', table, 'at index:', index);              
-							return (
-                                <Fragment key={table} as="li" animation="fade-right" index={index}>
-                                    <div className='flex gap-2 items-center'><FolderOpen /> <code className="text-blue-300">{table}</code></div>
-                                </Fragment>
-                            );
-                        })}
-					</ul>
-				</div>
-                <Fragment index={5}>
-                    <p className="text-orange-400 font-semibold mb-3">Migration — table users</p>
-                    <div index={7} className='text-2xl w-auto'>
-                        <Code language="js" lineNumbers="1-10" className="text-3xl">
-                          {`await queryInterface.createTable("users", {
-	id: { type: INTEGER, primaryKey: true,
-			autoIncrement: true },
-	email: { type: STRING(255),
-			unique: true, allowNull: false },
-	role: { type: ENUM("ADMIN","CLIENT"),
-			defaultValue: "CLIENT" },
-	password: { type: STRING(255) },
-	// ...
-});`}
-                      </Code>
-                    </div>
-                </Fragment>
-            </div>
+            
             <aside className="notes text-lg">
-                8 fichiers de migration pour l'évolution du schéma. Mentionner les foreign keys et les ENUM pour les rôles.
-                <br/>
-                <br/>
-                <pre><code>{sqlNote}</code></pre>
+                <pre><code>{notes}</code></pre>
             </aside>
         </Slide>
     );
