@@ -2,7 +2,7 @@ import { Slide, Fragment, Code } from '@revealjs/react';
 import { DatabaseZap, FolderOpen } from 'lucide-react';
 
 export default function CP5Slide() {
-    
+
     const tables = ['users', 'portfolios', 'projects', 'project_images', 'certificates'];
     const sqlNote = `CREATE TABLE \`users\` (
     \`id\` INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,7 +54,11 @@ export default function CP5Slide() {
                 8 fichiers de migration pour l'évolution du schéma. Mentionner les foreign keys et les ENUM pour les rôles.
                 <br/>
                 <br/>
-                <pre><code>{sqlNote}</code></pre>
+                <pre>
+                    <code>
+                        {sqlNote}
+                    </code>
+                </pre>
             </aside>
         </Slide>
     );

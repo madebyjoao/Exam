@@ -22,7 +22,7 @@ import DemoSlide from './slides/DemoSlide';
 import ConclusionSlide from './slides/ConclusionSlide';
 import CP5_1Slide from './slides/CP5.1Slide';
 import Roadmap from './slides/Roadmap';
-import CP5_2Slide from './slides/CP5.2Slide';
+import CP5_2Slide from './slides/CP5.3Slide';
 import CP2_1Slide from './slides/CP2.1Slide';
 import CP2_2Slide from './slides/CP2.2Slide';
 
@@ -37,6 +37,7 @@ export default function App() {
                 transition: 'slide',
                 backgroundTransition: 'fade',
                 center: false,
+                
             }}
         >   
             {/* Debout de la presentation petit slide avec le non do project et presentation de soi meme */}
@@ -62,8 +63,6 @@ export default function App() {
             
             {/* Mettre en place une base de données relationnelle */}
             <CP5Slide />
-
-            {/*  */}
             <CP5_1Slide />
             <CP5_2Slide />
 

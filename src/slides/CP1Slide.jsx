@@ -23,7 +23,7 @@ system de migration, gere les relation entre table (hasMany ou belongsTo)
             </div>
             <div className="grid grid-cols-3 gap-4 text-left">
                 <div asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 min-h-60">
+                    <div className="bg-white/5 border border-white/10 p-4 min-h-60">
                         <p className="text-blue-500 font-semibold mb-2">Front-end</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none">
                             <li className="flex items-center gap-2"><Zap /> Vite — build tool</li>
@@ -33,7 +33,7 @@ system de migration, gere les relation entre table (hasMany ou belongsTo)
                     </div>
                 </div>
                 <div asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 min-h-60">
+                    <div className="bg-white/5 border border-white/10 p-4 min-h-60">
                         <p className="text-red-600 font-semibold mb-2">Back-end</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none">
                             <li className="flex items-center gap-2"><Hexagon /> Node.js + Express</li>
@@ -43,7 +43,7 @@ system de migration, gere les relation entre table (hasMany ou belongsTo)
                     </div>
                 </div>
                 <div asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl py-4 min-h-60">
+                    <div className="bg-white/5 border border-white/10 py-4 min-h-60">
                         <p className="text-purple-600 font-semibold mb-0">Base de données</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none px-4">
                             <li className="flex items-center gap-2"><Database />MySQL + Sequelize-cli</li>
