@@ -22,11 +22,11 @@ Points notables du schéma :
     return (
         <Slide backgroundImage={MCD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
             
-            <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-5">
                 <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
-                <h3 className="text-xl font-bold text-white">MCD</h3>
+                <p className="text-6xl font-extrabold text-black">MCD</p>
             </div>
-            <p className='text-sm text-black'>Modèle Conceptuel des Données</p>
+            <p className='text-sm text-left text-black'>Modèle Conceptuel des Données</p>
             
             <aside className="notes text-lg">
                 <pre><code>{notes}</code></pre>

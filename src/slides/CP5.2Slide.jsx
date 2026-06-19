@@ -1,6 +1,6 @@
 import { Slide, Fragment, Code } from '@revealjs/react';
 import { DatabaseZap, FolderOpen } from 'lucide-react';
-import MPD from "../assets/MPD.png"
+import MLD from "../assets/MLD.png"
 
 
 export default function CP5_2Slide() {
@@ -20,12 +20,13 @@ Points notables du schéma :
 - 8 fichiers de migration sequelize `
 
     return (
-        <Slide backgroundImage={MPD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
+        <Slide backgroundImage={MLD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
             
             <div className="flex items-center gap-3 mb-5">
                 <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
-                <h3 className="text-xl font-bold text-white">Base de données relationnelle</h3>
+                <p className="text-6xl font-extrabold text-black">MLD</p>
             </div>
+            <p className='text-sm text-left text-black'>Modèle Logique de Données</p>
             
             <aside className="notes text-lg">
                 <pre><code>{notes}</code></pre>

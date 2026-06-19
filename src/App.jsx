@@ -22,9 +22,10 @@ import DemoSlide from './slides/DemoSlide';
 import ConclusionSlide from './slides/ConclusionSlide';
 import CP5_1Slide from './slides/CP5.1Slide';
 import Roadmap from './slides/Roadmap';
-import CP5_2Slide from './slides/CP5.3Slide';
+import CP5_2Slide from './slides/CP5.2Slide';
 import CP2_1Slide from './slides/CP2.1Slide';
 import CP2_2Slide from './slides/CP2.2Slide';
+import CP5_3Slide from './slides/CP5.3Slide';
 
 export default function App() {
     return (
@@ -65,6 +66,7 @@ export default function App() {
             <CP5Slide />
             <CP5_1Slide />
             <CP5_2Slide />
+            <CP5_3Slide />
 
             {/* Développer des composants d’accès aux données SQL et NoSQL */}
             <CP6Slide />
