@@ -27,6 +27,7 @@ import CP2_1Slide from './slides/CP2.1Slide';
 import CP2_2Slide from './slides/CP2.2Slide';
 import CP5_3Slide from './slides/CP5.3Slide';
 
+
 export default function App() {
     return (
         <Deck
@@ -64,6 +65,7 @@ export default function App() {
             
             {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
             <CP3Slide />
+
             
             {/* Mettre en place une base de données relationnelle */}
             <CP5_1Slide />

@@ -32,7 +32,7 @@ export default function CP6Slide() {
 }, { tableName: "users", timestamps: true });`}
                     </Code>
                 </div>
-                <Fragment asChild>
+                <div asChild>
                     <div>
                         <p className="text-green-400 font-semibold mb-3 text-left">CRUD — opérations sécurisées</p>
                         <Code language="js">
@@ -53,7 +53,7 @@ await Portfolio.update(fields, { where: { userId } });
 await Certificate.destroy({ where: { id } });`}
                         </Code>
                     </div>
-                </Fragment>
+                </div>
             </div>
             <aside className="notes">
                 <pre><code>{notes}</code></pre>

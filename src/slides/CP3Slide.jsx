@@ -17,39 +17,48 @@ export default function CP3Slide() {
               <p className="text-orange-400 font-semibold mb-3">
                 Html - Page Statique
               </p>
-              <Code language="js" lineNumbers="1-38">
+              <Code language="js" lineNumbers="1-42">
                 {`<div class="col col-left">
 
-    <div>
-        <span class="kw">public static class</span> <span class="class-name">EXPÉRIENCES</span>
-    </div>
+  <div>
+    <span class="kw">public static class</span>
+    <span class="class-name">EXPÉRIENCES</span>
+  </div>
 
+  <div class="brace">{</div>
+
+  <div class="method">
+    <div class="method-sig">
+      <span class="kw">public void</span>&nbsp;
+      <span class="fn">FreelanceDev</span><span class="pt">()</span>
+    </div>
     <div class="brace">{</div>
-
-    <div class="method">
-
-        <div class="method-sig">
-            <span class="kw">public void</span>&nbsp;<span class="fn">FreelanceDev</span><span class="pt">()</span>
-        </div>
-
-        <div class="brace">{</div>
-
-        <div class="method-body">
-            <div class="field"><span class="kw">var</span> <span class="vc">_Client</span> <span class="pt">=</span> <span class="st">"NeoGec"</span><span class="pt">;</span></div>
-            <div class="field"><span class="kw">var</span> <span class="vc">_Date</span> <span class="pt">=</span> <span class="fn">Range</span><span class="pt">(</span>début<span class="pt">:</span> <span class="nm">2026</span><span class="pt">,</span> fin<span class="pt">:</span> <span class="ty">en cours</span><span class="pt">);</span></div>
-            <div class="field"><span class="kw">var</span> <span class="vc">_Type</span> <span class="pt">=</span> <span class="kw">new</span> <span class="ty">Freelance</span><span class="pt">;</span></div>
-        </div>
-
-        <div class="brace">}</div>
-
-        <div class="comment-block">
-            <span class="cbullet">Conception et développement d'un site web professionnel</span>
-            <span class="cbullet">Analyse des besoins client et définition des fonctionnalités</span>
-            <span class="cbullet">Intégration front-end (HTML, CSS, React)</span>
-            <span class="cbullet">Mise en place du backend (Node.js / Express)</span>
-            <span class="cbullet">Déploiement et mise en ligne du site</span>
-        </div>
+    <div class="method-body">
+      <div class="field">
+        <span class="kw">var</span> <span class="vc">_Client</span>
+        <span class="pt">=</span> <span class="st">"NeoGec"</span>
+        <span class="pt">;</span>
+      </div>
+      <div class="field">
+        <span class="kw">var</span> <span class="vc">_Date</span>
+        <span class="pt">=</span> Range(2026, en cours)
+        <span class="pt">;</span>
+      </div>
+      <div class="field">
+        <span class="kw">var</span> <span class="vc">_Type</span>
+        <span class="pt">=</span> <span class="kw">new</span> 
+        <span class="ty">Freelance</span><span class="pt">;</span>
+      </div>
     </div>
+    <div class="brace">}</div>
+    <div class="comment-block">
+      <span class="cbullet">Conception et développement web</span>
+      <span class="cbullet">Analyse des besoins client</span>
+      <span class="cbullet">Intégration front-end (HTML/CSS/React)</span>
+      <span class="cbullet">Backend (Node.js / Express)</span>
+      <span class="cbullet">Déploiement et mise en ligne</span>
+    </div>
+  </div>
 </div>`}
               </Code>
             </div>
@@ -57,9 +66,9 @@ export default function CP3Slide() {
           <div>
             <div>
               <p className="text-orange-400 font-semibold mb-3">
-                CSS - Interface Statique
+                CSS - Interface Statique + mobile responsive
               </p>
-              <Code language="css" lineNumbers="1-38">
+              <Code language="css" lineNumbers="1-44">
                 {`.brace { color: var(--punct); }
 .class-name {
     font-size: 13.5px;
@@ -85,6 +94,18 @@ export default function CP3Slide() {
     line-height: 1.75;
     }
 .cbullet { display: block; padding-left: 10px; position: relative; }
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .col-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .col { padding: 14px 16px; }
+    .class-name { font-size: 12px; }
+}
  `}
               </Code>
             </div>

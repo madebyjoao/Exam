@@ -8,7 +8,7 @@ export default function CP7Slide() {
                 <h2 className="text-3xl font-bold text-white">Composants métier côté serveur</h2>
             </div>
             <div className="grid grid-cols-3 gap-4 text-sm text-left">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                <div className="bg-white/5 border border-white/10  p-4">
                     <p className="text-orange-400 font-semibold mb-2">🔐 Auth JWT</p>
                     <Code language="js">
 {`const decoded = jwt.verify(
@@ -22,8 +22,8 @@ if (!roles.includes(user.role))
   );`}
                     </Code>
                 </div>
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                <div>
+                    <div className="bg-white/5 border border-white/10  p-4">
                         <p className="text-blue-400 font-semibold mb-2">🖼️ Upload & Sharp</p>
                         <Code language="js">
 {`await sharp(file.buffer)
@@ -35,9 +35,9 @@ if (!roles.includes(user.role))
   .toFile(uploadPath);`}
                         </Code>
                     </div>
-                </Fragment>
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                </div>
+                <div>
+                    <div className="bg-white/5 border border-white/10  p-4">
                         <p className="text-green-400 font-semibold mb-2">🛣️ Routes Express</p>
                         <ul className="text-slate-300 text-xs space-y-1 list-none">
                             <li><code>POST /auth/login</code></li>
@@ -48,7 +48,7 @@ if (!roles.includes(user.role))
                         </ul>
                         <p className="text-slate-500 text-xs mt-2">Multer (5 MB max) + middleware auth sur chaque route protégée</p>
                     </div>
-                </Fragment>
+                </div>
             </div>
             <aside className="notes">
                 <pre><code>{`CP7 - Composants métier côté serveur:

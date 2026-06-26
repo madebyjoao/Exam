@@ -33,7 +33,7 @@ export default function CP8Slide() {
                     </Fragment>
                 </div>
                 <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                    <div className="bg-white/5 border border-white/10 p-4">
                         <p className="text-orange-400 font-semibold mb-3">Variables d'environnement</p>
                         <Code language="bash">
 {`PORT=3000

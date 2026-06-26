@@ -12,7 +12,7 @@ export default function CP4Slide() {
             <div className="grid grid-cols-2 grid-rows-[auto_auto] gap-3 text-left text-sm ">
                 {/* Row 1, Col 1 — TanStack Query (first half) */}
                 <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-lg p-4 col-span-2 h-fit">
+                    <div className="bg-white/5 border border-white/10  p-4 col-span-2 h-fit">
                         <p className="text-purple-400 font-semibold mb-2">TanStack Query</p>
                         <div className='grid grid-cols-2 grid-rows-1 h-fit'>
                             <div className="">                            
@@ -34,7 +34,7 @@ export default function CP4Slide() {
 
                 {/* Row 2, Col 1 — React Router */}
                 <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-lg p-2 row-start-2 col-start-1 h-fit">
+                    <div className="bg-white/5 border border-white/10  p-2 row-start-2 col-start-1 h-fit">
                         <p className="text-blue-400 font-semibold mb-2">Routage — React Router</p>
                         <Code language="jsx">
 {`<BrowserRouter>
@@ -80,7 +80,7 @@ export default function CP4Slide() {
 
                 {/* Row 2, Col 2 — Axios */}
                 <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10 rounded-lg p-3 row-start-2 col-start-2 h-fit">
+                    <div className="bg-white/5 border border-white/10  p-3 row-start-2 col-start-2 h-fit">
                         <p className="text-green-400 font-semibold mb-2">Axios — intercepteur JWT</p>
                         <Code language="js">
 {`import axios from "axios";
