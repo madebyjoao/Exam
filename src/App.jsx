@@ -26,6 +26,8 @@ import CP5_2Slide from './slides/CP5.2Slide';
 import CP2_1Slide from './slides/CP2.1Slide';
 import CP2_2Slide from './slides/CP2.2Slide';
 import CP5_3Slide from './slides/CP5.3Slide';
+import Securite from './slides/Securite';
+import SEO from './slides/SEO';
 
 
 export default function App() {
@@ -81,8 +83,12 @@ export default function App() {
             <CP7Slide />
 
             {/* Développer la partie dynamique des interfaces utilisateur web ou web mobile */}
-            <CP4Slide />            
+            <CP4Slide />
 
+            <Securite />            
+
+            <SEO />
+            
             {/* Documenter le déploiement d’une application dynamique web ou web mobile */}
             <CP8Slide />
 

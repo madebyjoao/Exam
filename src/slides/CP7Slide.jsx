@@ -22,6 +22,8 @@ if (!roles.includes(user.role))
   );`}
                     </Code>
                 </div>
+
+                {/* manque fetch etc controller etc */}
                 <div>
                     <div className="bg-white/5 border border-white/10  p-4">
                         <p className="text-blue-400 font-semibold mb-2">🖼️ Upload & Sharp</p>
