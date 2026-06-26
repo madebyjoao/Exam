@@ -11,9 +11,9 @@ export default function Roadmap() {
                 <p className="font-semibold mb-3 text-lg">Activité type 2</p>
                 <p className="font-semibold mb-3 text-lg">CP1 · Environnement de travail</p>
                 <p className="font-semibold mb-3 text-lg">CP2 · Maquettage des interfaces</p>
+                <p className="font-semibold mb-3 text-lg">CP3 · Interfaces statiques</p>
                 <p className="font-semibold mb-3 text-lg">CP5 · Base de données relationnelle</p>
                 <p className="font-semibold mb-3 text-lg">CP6 · Composants d’accès aux données</p>
-                <p className="font-semibold mb-3 text-lg">CP3 · Interfaces statiques</p>
                 <p className="font-semibold mb-3 text-lg">CP7 · Composants métier coté serveur</p>
                 <p className="font-semibold mb-3 text-lg">CP4 · Interfaces dynamiques</p>
                 <p className="font-semibold mb-3 text-lg">CP8 · Documentation de le deploiement </p>

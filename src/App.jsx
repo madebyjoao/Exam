@@ -62,6 +62,9 @@ export default function App() {
             <CP2_1Slide />
             <CP2_2Slide />
             
+            {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
+            <CP3Slide />
+            
             {/* Mettre en place une base de données relationnelle */}
             <CP5Slide />
             <CP5_1Slide />
@@ -71,8 +74,6 @@ export default function App() {
             {/* Développer des composants d’accès aux données SQL et NoSQL */}
             <CP6Slide />
 
-            {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
-            <CP3Slide />
 
             {/* Développer des composants métier coté serveur */}
             <CP7Slide />
