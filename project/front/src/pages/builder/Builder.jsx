@@ -1,0 +1,565 @@
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
+import * as z from "zod";
+import { getPortfolioBuilder, updatePortfolio } from "../../api/builder";
+import { fonts, fontFamilies } from "../../utils/fonts";
+import Styles from "@/index.module.css"
+import StyledSelect from "@/components/builder/StyledSelect";
+import { BASE_URL } from "../../api/config";
+
+const fontValues = fonts.map(f => f.value);
+
+const createEditPortfolioSchema = (hasExistingPicture) => z.object({
+    title: z.string().min(1, "title is required"),
+    about_title: z.string().min(1, "About title is required"),
+    about_text: z.string().min(1, "About You text is required").max(1024, "Max number of characters: 1024"),
+    is_published: z.stringbool(),
+    template: z.enum(["1", "2", "3"]).transform(Number),
+    font_navbar: z.enum(fontValues),
+    font_main:   z.enum(fontValues),
+    font_footer: z.enum(fontValues),
+    full_name: z.string().optional(),
+    position: z.string().optional(),
+    region: z.string().optional(),
+    technologies: z.array(z.string()).optional().default([]),
+    file: z.instanceof(FileList)
+            .optional()
+            .refine(
+                (files) => !files || files.length === 0 || ["application/pdf"].includes(files[0].type), "Only PDF files allowed"
+            )
+            .transform((files) => (files && files.length > 0 ? files[0] : undefined)),
+    picture: z.instanceof(FileList)
+                    .optional()
+                    .refine(
+                        (files) => !files || files.length === 0 || ['image/jpeg', 'image/png', 'image/webp'].includes(files[0].type),
+                        "Only JPEG, PNG and WEBP allowed"
+                    )
+                    .transform((files) => (files && files.length > 0 ? files[0] : undefined)),
+    }).superRefine((data, ctx) => {
+        if (data.template === 3 && !data.picture && !hasExistingPicture) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A picture is required for Template 3",
+                path: ["picture"],
+            });
+        }
+    });
+    
+
+function Builder() {
+
+    const slug = localStorage.getItem("slug");
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    const [preview, setPreview] = useState();
+    const [hasExistingPicture, setHasExistingPicture] = useState(false);
+
+    const { isPending, isError, data, error } = useQuery({
+        queryKey: ["builder-portfolio", slug],
+        queryFn: () => getPortfolioBuilder(slug),
+        enabled: !!slug,
+    });
+
+    const editPortfolioSchema = useMemo(
+        () => createEditPortfolioSchema(hasExistingPicture),
+        [hasExistingPicture]
+    );
+
+    const { register, handleSubmit, reset, control, getValues, formState: { errors }, watch } = useForm({
+        resolver: zodResolver(editPortfolioSchema),
+    });
+
+    const { mutate } = useMutation({
+        mutationFn: (formData) => updatePortfolio(slug, formData),
+        onSuccess: () => {
+            queryClient.invalidateQueries(["builder-portfolio", slug]);
+            navigate(0);
+        },
+        onError: (error) => {
+            console.error("Failed to update portfolio:", error);
+            alert(error?.response?.data?.error ?? "Failed to save changes");
+        },
+    });
+
+    const [font_navbar, font_main, font_footer] = watch(["font_navbar", "font_main", "font_footer"]);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedPicture, setSelectedPicture] = useState(null);
+    const [techInput, setTechInput] = useState("");
+    const [charCount, setCharCount] = useState(getValues("about_text")?.length || 0);   
+    const MAX_LENGTH = 1024
+    
+
+    useEffect(() => {
+        if (data?.data?.portfolio) {
+            const p = data.data.portfolio;
+            reset({
+                title: p.title ?? "",
+                about_title: p.about_title ?? "",
+                about_text: p.about_text ?? "",
+                is_published: p.is_published ? "1" : "0",
+                template: String(p.template ?? 1),
+                font_navbar: p.font_navbar ?? fonts[0].value,
+                font_main:   p.font_main ?? fonts[0].value,
+                font_footer: p.font_footer ?? fonts[0].value,
+                full_name: p.full_name ?? "",
+                position: p.position ?? "",
+                region: p.region ?? "",
+                technologies: p.technologies ?? [],
+            });
+            setCharCount(p.about_text?.length || 0);
+            
+            if (p.picture_path) {
+                setPreview(`${BASE_URL}/uploads/${p.picture_path}`);
+                setHasExistingPicture(true);
+            } else {
+                setHasExistingPicture(false);
+            }
+        }
+    }, [data, reset, slug]);
+
+
+    useEffect(() => {
+        return () => {
+            if (preview && preview.startsWith('blob:')) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, [preview]);
+
+    if (isPending) {
+        return <div>Charging...</div>;
+    }
+
+    if (isError) {
+        return <div>Erreur : {error.message}</div>;
+    }
+    if (!data) {
+        return <div>No portfolio</div>;
+    }
+
+    const portfolio = data.data.portfolio;
+
+
+
+    /* DeleteMutation not sure how im gonna handle this yet ask Sambeau for ideas.... */
+
+    const onSubmit = (data) => {
+        const formData = new FormData();
+        formData.append("id", portfolio.id);
+        formData.append("title", data.title);
+        formData.append("about_title", data.about_title);
+        formData.append("about_text", data.about_text);
+        formData.append("is_published", data.is_published ? "1" : "0");
+        formData.append("template", data.template);
+        formData.append("font_navbar", data.font_navbar);
+        formData.append("font_main", data.font_main);
+        formData.append("font_footer", data.font_footer);
+        formData.append("full_name", data.full_name ?? "");
+        formData.append("position", data.position ?? "");
+        formData.append("region", data.region ?? "");
+        formData.append("technologies", JSON.stringify(data.technologies ?? []));
+        if (data.picture) formData.append("picture", data.picture);
+        if (data.file) formData.append("file", data.file);
+        mutate(formData);
+
+    }
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+        setSelectedFile(file.name);
+        } else {
+        setSelectedFile(null);
+        }
+    };
+
+    const handlePictureChange = (e) => {
+        const picture = e.target.files[0];
+        if (picture) {
+            setSelectedPicture(picture.name);
+            // Create preview URL for the new picture
+            const previewUrl = URL.createObjectURL(picture);
+            setPreview(previewUrl);
+        } else {
+            setSelectedPicture(null);
+            setPreview(null);
+        }
+    };
+
+    const handleInputChange = (e) => {
+            setCharCount(e.target.value.length);
+        };    
+        
+    return (    
+                <form 
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="grid grid-cols-6 grid-rows-[auto_1fr_1fr_1fr_1fr_auto_auto] gap-4 max-h-screen h-full p-4">
+
+                    {/* Template Selection */}
+                    <div className="col-span-3 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h2 className="text-2xl font-bold text-(--builder-Sidebar-text)">
+                                Select your template
+                            </h2>
+                            <Controller
+                                name="template"
+                                control={control}
+                                render={({ field }) => (
+                                    <StyledSelect
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        options={[
+                                            { value: "1", label: "Template 1" },
+                                            { value: "2", label: "Template 2" },
+                                            { value: "3", label: "Template 3" }
+                                        ]}
+                                    />
+                                )}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Publish Status */}
+                    <div className="col-start-4 col-span-3 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h2 className="text-2xl font-bold text-(--builder-Sidebar-text)">
+                                Ready to show your Portfolio to the world?
+                            </h2>
+                            <Controller
+                                name="is_published"
+                                control={control}
+                                render={({ field }) => (
+                                    <StyledSelect
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        options={[
+                                            { value: "1", label: "Yes, I'm ready" },
+                                            { value: "0", label: "No, I'm shy" }
+                                        ]}
+                                    />
+                                )}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Full Name */}
+                    <div className="row-start-2 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text) rounded-lg py-2 px-3 text-center">
+                                Full Name
+                            </h3>
+                            <input
+                                className="flex-1 bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition placeholder:text-gray-200 text-(--builder-Sidebar-text)"
+                                type="text"
+                                placeholder="e.g., João Silva"
+                                {...register("full_name")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Position */}
+                    <div className="row-start-2 col-start-3 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text) rounded-lg py-2 px-3 text-center">
+                                Position
+                            </h3>
+                            <input
+                                className="flex-1 bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition placeholder:text-gray-200 text-(--builder-Sidebar-text)"
+                                type="text"
+                                placeholder="e.g., Full Stack Developer"
+                                {...register("position")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Region */}
+                    <div className="row-start-2 col-start-5 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text) rounded-lg py-2 px-3 text-center">
+                                Region
+                            </h3>
+                            <input
+                                className="flex-1 bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition placeholder:text-gray-200 text-(--builder-Sidebar-text)"
+                                type="text"
+                                placeholder="e.g., Lisbon, PT / Remote"
+                                {...register("region")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Technologies */}
+                    <div className="row-start-3 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text) rounded-lg py-2 px-3 text-center">
+                                Technologies
+                            </h3>
+                            <Controller
+                                name="technologies"
+                                control={control}
+                                render={({ field }) => (
+                                    <div className="flex flex-col gap-3 h-full">
+                                        <div className="flex flex-wrap gap-2 min-h-8">
+                                            {field.value?.map((t) => (
+                                                <span key={t} className="flex items-center gap-1 px-3 py-1 rounded-full bg-(--builder-buttons)/30 border border-(--builder-dashboard-border-inputs) text-(--builder-Sidebar-text) text-sm">
+                                                    {t}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => field.onChange(field.value.filter(v => v !== t))}
+                                                        className="ml-1 hover:text-red-400 transition">
+                                                        ×
+                                                    </button>
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <input
+                                            type="text"
+                                            value={techInput}
+                                            onChange={(e) => setTechInput(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter" && techInput.trim()) {
+                                                    e.preventDefault();
+                                                    if (!field.value?.includes(techInput.trim())) {
+                                                        field.onChange([...(field.value ?? []), techInput.trim()]);
+                                                    }
+                                                    setTechInput("");
+                                                }
+                                            }}
+                                            placeholder="Type a technology and press Enter"
+                                            className="bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition placeholder:text-gray-200 text-(--builder-Sidebar-text)"
+                                        />
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    </div> 
+                    {/* Portfolio Name */}
+                    <div className="row-start-3 col-span-2 col-start-3 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text)  rounded-lg py-2 px-3 text-center">
+                                Portfolio Name
+                            </h3>
+                            <input 
+                                className="flex-1 bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition placeholder:text-gray-200 text-(--builder-Sidebar-text)" 
+                                id="title" 
+                                type="text" 
+                                placeholder="Enter your portfolio name"
+                                {...register("title")} 
+                            />
+                        </div>
+                    </div>
+
+                    {/* About Title */}
+                    <div className="col-start-5 row-start-3 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text)  rounded-lg py-2 px-3 text-center">
+                                About Title
+                            </h3>
+                            <input 
+                                className="flex-1 bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition placeholder:text-gray-200 text-(--builder-Sidebar-text)"
+                                id="about_title" 
+                                type="text" 
+                                placeholder="e.g., About Me"
+                                {...register("about_title")} 
+                            />
+                        </div>
+                    </div>
+
+                    {/* About Text */}
+                    <div className="row-start-4 col-start-3 col-span-2 row-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text)  rounded-lg py-2 px-3 text-center">
+                                About You
+                            </h3>
+                            <textarea 
+                                className="flex-1 bg-(--builder-buttons)/30 border-2 border-(--builder-dashboard-border-inputs) rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-(--builder-buttons) focus:border-(--builder-buttons) transition resize-none placeholder:text-gray-200 text-(--builder-Sidebar-text)" 
+                                id="about_text" 
+                                placeholder="Tell the world about yourself..."
+                                maxLength={MAX_LENGTH}
+                                {...register("about_text")}
+                                onChange={(e) => {
+                                    register("about_text").onChange(e);
+                                    handleInputChange(e);
+                                }}
+                            ></textarea>
+                            <div className="text-right text-sm text-(--builder-Sidebar-text)">
+                                {MAX_LENGTH - charCount} characters left
+                            </div>
+                        </div>
+                    </div>        
+
+                    {/* CV Upload */}
+                    <div className="row-start-4 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text) text-center">Upload your CV</h3>
+                            <label 
+                                htmlFor="dropzone-file" 
+                                className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-(--builder-dashboard-border-inputs) rounded-lg hover:border-(--builder-buttons) hover:bg-(--builder-buttons)/5 transition cursor-pointer group">
+                                <div className="flex flex-col items-center justify-center py-6 px-4 text-center">
+                                    <svg className="w-10 h-10 mb-3 text-(--builder-buttons) group-hover:scale-110 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
+                                    </svg>
+                                    <p className="mb-2 text-sm text-(--builder-Sidebar-text)">
+                                        <span className="font-semibold">Click to upload</span> or drag and drop
+                                    </p>
+                                    <p className="text-base font-medium text-(--builder-Sidebar-text)">
+                                        {selectedFile ? selectedFile : 'Your CV (.pdf)'}
+                                    </p>
+                                </div>
+                                <input
+                                    id="dropzone-file"
+                                    type="file"
+                                    className="hidden"
+                                    accept=".pdf"
+                                    {...register("file", { onChange: handleFileChange })}
+                                    
+                                />
+                            </label>
+                        </div>                        
+                    </div> 
+                    {/* Pic Upload */}
+                    <div className="row-start-4 col-start-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-4 h-full">
+                            <h3 className="text-xl font-bold text-(--builder-Sidebar-text) text-center">Upload your Picture</h3>
+                            <label 
+                                htmlFor="dropzone-picture" 
+                                className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-(--builder-dashboard-border-inputs) rounded-lg hover:border-(--builder-buttons) hover:bg-(--builder-buttons)/5 transition cursor-pointer group">
+                                {preview ? (
+                                    <div className="flex flex-col items-center justify-center py-6 px-4 text-center gap-3">
+                                        <img 
+                                            src={preview} 
+                                            alt="Picture preview" 
+                                            className="w-24 h-24 object-cover rounded-full border-2 border-(--builder-buttons)"
+                                        />
+                                        <p className="text-sm text-(--builder-Sidebar-text) font-medium">
+                                            {selectedPicture || 'Current picture'}
+                                        </p>
+                                        <p className="text-xs text-(--builder-Sidebar-text)/70">
+                                            Click to change
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center py-6 px-4 text-center">
+                                        <svg className="w-10 h-10 mb-3 text-(--builder-buttons) group-hover:scale-110 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
+                                        </svg>
+                                        <p className="mb-2 text-sm text-(--builder-Sidebar-text)">
+                                            <span className="font-semibold">Click to upload</span> or drag and drop
+                                        </p>
+                                        <p className="text-base font-medium text-(--builder-Sidebar-text)">
+                                            Your Picture (.JPEG, .PNG, .WEBP)
+                                        </p>
+                                    </div>
+                                )}
+                                <input
+                                    id="dropzone-picture"
+                                    type="file"
+                                    className="hidden"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    {...register("picture", { onChange: handlePictureChange })}
+                                />
+                            </label>
+                        </div>                        
+                    </div>         
+
+                    {/* Navbar Font */}
+                    <div className="row-start-4 col-span-2 col-start-5 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-3 h-full">
+                            <h3 className="text-xl font-bold text-center text-(--builder-Sidebar-text)  rounded-lg py-2">
+                                Navbar Font
+                            </h3>
+                            <Controller
+                                name="font_navbar"
+                                control={control}
+                                render={({ field }) => (
+                                    <StyledSelect
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        options={fonts.map(f => ({ value: f.value, label: f.label }))}
+                                        isSearchable={true}
+                                    />
+                                )}
+                            />
+                            <div 
+                                className="flex-1 bg-linear-to-br from-(--builder-buttons)/30 to-(--builder-buttons)/10 border border-(--builder-dashboard-border-inputs) rounded-lg p-3 flex items-center justify-center text-center"
+                                style={{ fontFamily: fontFamilies[font_navbar] || fontFamilies.abeezee, fontSize: '16px' }}>
+                                <p className="text-(--builder-Sidebar-text) leading-relaxed">
+                                    A Preview of the Font you are selecting, Have FUN!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Font */}
+                    <div className="row-start-5 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-3 h-full">
+                            <h3 className="text-xl font-bold text-center text-(--builder-Sidebar-text)  rounded-lg py-2">
+                                Main Font
+                            </h3>
+                            <Controller
+                                name="font_main"
+                                control={control}
+                                render={({ field }) => (
+                                    <StyledSelect
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        options={fonts.map(f => ({ value: f.value, label: f.label }))}
+                                        isSearchable={true}
+                                    />
+                                )}
+                            />
+                            <div 
+                                className="flex-1 bg-linear-to-br from-(--builder-buttons)/30 to-(--builder-buttons)/10 border border-(--builder-dashboard-border-inputs) rounded-lg p-3 flex items-center justify-center text-center"
+                                style={{ fontFamily: fontFamilies[font_main] || fontFamilies.abeezee, fontSize: '16px' }}>
+                                <p className="text-(--builder-Sidebar-text) leading-relaxed">
+                                    A Preview of the Font you are selecting, Have FUN!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Footer Font */}
+                    <div className="col-start-5 row-start-5 col-span-2 backdrop-blur bg-(--builder-SideBar) rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col gap-3 h-full">
+                            <h3 className="text-xl font-bold text-center text-(--builder-Sidebar-text)  rounded-lg py-2">
+                                Footer Font
+                            </h3>
+                            <Controller
+                                name="font_footer"
+                                control={control}
+                                render={({ field }) => (
+                                    <StyledSelect
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        options={fonts.map(f => ({ value: f.value, label: f.label }))}
+                                        isSearchable={true}
+                                    />
+                                )}
+                            />
+                            <div 
+                                className="flex-1 bg-linear-to-br from-(--builder-buttons)/30 to-(--builder-buttons)/10 border border-(--builder-dashboard-border-inputs) rounded-lg p-3 flex items-center justify-center text-center"
+                                style={{ fontFamily: fontFamilies[font_footer] || fontFamilies.abeezee, fontSize: '16px' }}>
+                                <p className="text-(--builder-Sidebar-text) leading-relaxed">
+                                    A Preview of the Font you are selecting, Have FUN!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                                      
+                    
+
+                    {/* Submit Button */}
+                    <button 
+                        type="submit"
+                        className="col-start-2 row-start-6 col-span-4 backdrop-blur bg-black/30  text-white py-4 rounded-xl text-lg font-bold hover:bg-(--builder-buttons) disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        {isPending ? "Updating..." : "Save Changes"}
+                    </button>
+                </form>
+    );
+}
+
+export default Builder;
