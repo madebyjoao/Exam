@@ -2,8 +2,7 @@ import { Slide, Fragment, Code } from '@revealjs/react';
 
 export default function CP4Slide() {
     return (
-        <Slide 
-            notes="parle ici de cp4" 
+        <Slide
             background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div                
                 className="flex items-center gap-3 mb-5">
@@ -14,7 +13,7 @@ export default function CP4Slide() {
                 {/* Row 1, Col 1 — TanStack Query (first half) */}
                 <Fragment asChild>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-4 col-span-2 h-fit">
-                        <p className="text-purple-400 font-semibold mb-2">TanStack Query <span className='text-black text-xl'>INSERT DOSSIER PAGE</span></p>
+                        <p className="text-purple-400 font-semibold mb-2">TanStack Query</p>
                         <div className='grid grid-cols-2 grid-rows-1 h-fit'>
                             <div className="">                            
                                 <ul className="text-slate-300 space-y-1 list-none">
@@ -114,6 +113,16 @@ export default instance;`}
                     </div>
                 </Fragment>
             </div>
+            <aside className="notes">
+                <pre><code>{`CP4 - Interfaces dynamiques:
+- TanStack Query: gère le cache côté client avec staleTime: Infinity pour éviter des requêtes inutiles.
+  Après chaque mutation (create/update/delete), on invalide le cache ciblé via queryClient.invalidateQueries.
+  Gestion des états loading/error/success pour afficher des feedbacks à l'utilisateur.
+- React Router: structure de routes imbriquées avec layouts (PublicLayout, BuilderLayout, AdminLayout, PortfolioLayout).
+  Routes privées protégées par RoleGuard qui vérifie le token JWT stocké en localStorage.
+- Axios intercepteur: injecte automatiquement le token Bearer sur chaque requête sortante.
+  Sépare la logique d'authentification du reste des composants.`}</code></pre>
+            </aside>
         </Slide>
     );
 }

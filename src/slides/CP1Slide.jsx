@@ -36,7 +36,7 @@ system de migration, gere les relation entre table (hasMany ou belongsTo)
                     <div className="bg-white/5 border border-white/10 p-4 min-h-60">
                         <p className="text-red-600 font-semibold mb-2">Back-end</p>
                         <ul className="text-slate-300 text-sm space-y-1 list-none">
-                            <li className="flex items-center gap-2"><Hexagon /> Node.js + Express</li>
+                            <li className="flex items-center gap-2"><Hexagon /> Node.js</li>
                             <li className="flex items-center gap-2"><Superscript />Express 5</li>
                             <li className="flex items-center gap-2"><RefreshCcw /> Nodemon</li>
                         </ul>

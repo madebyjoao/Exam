@@ -20,13 +20,15 @@ Points notables du schéma :
 - 8 fichiers de migration sequelize `
 
     return (
-        <Slide backgroundImage={MLD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
+        <Slide 
+            backgroundColor='white'
+            backgroundImage={MLD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
             
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 pl-10 mb-5">
                 <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
                 <p className="text-6xl font-extrabold text-black">MLD</p>
             </div>
-            <p className='text-sm text-left text-black'>Modèle Logique de Données</p>
+            <p className='text-sm pl-10 text-left text-black'>Modèle Logique de Données</p>
             
             <aside className="notes text-lg">
                 <pre><code>{notes}</code></pre>

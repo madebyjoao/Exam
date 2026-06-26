@@ -66,10 +66,10 @@ export default function App() {
             <CP3Slide />
             
             {/* Mettre en place une base de données relationnelle */}
-            <CP5Slide />
             <CP5_1Slide />
             <CP5_2Slide />
             <CP5_3Slide />
+            <CP5Slide />
 
             {/* Développer des composants d’accès aux données SQL et NoSQL */}
             <CP6Slide />

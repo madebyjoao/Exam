@@ -23,6 +23,14 @@ export default function CP8Slide() {
                             <span className="text-slate-300">{step}</span>
                         </Fragment>
                     ))}
+                    <Fragment as="div" animation="fade-up" className="flex flex-col gap-1 pt-2 border-t border-white/10">
+                        <p className="text-slate-400 text-xs">Fichiers de documentation fournis :</p>
+                        <div className="flex gap-2 flex-wrap">
+                            {['README.md', 'API_GUIDE.md', 'RESPONSIVE_TIPS.md', '.env.example'].map(f => (
+                                <code key={f} className="text-blue-300 text-xs bg-white/5 px-2 py-0.5 rounded">{f}</code>
+                            ))}
+                        </div>
+                    </Fragment>
                 </div>
                 <Fragment asChild>
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4">
@@ -40,7 +48,15 @@ JWT_EXPIRES_IN=12h`}
                     </div>
                 </Fragment>
             </div>
-            <aside className="notes">Mentionner le README.md, l'API_GUIDE.md et le RESPONSIVE_TIPS.md fournis avec le projet.</aside>
+            <aside className="notes">
+                <pre><code>{`CP8 - Documentation du déploiement:
+- README.md: procédure complète de mise en place (prérequis, installation, migrations, seeders, lancement).
+  Inclut les comptes de démo, les routes principales et les commandes utiles.
+- API_GUIDE.md: documentation de tous les endpoints de l'API (méthode, route, body, réponse attendue).
+- RESPONSIVE_TIPS.md: guide des breakpoints et bonnes pratiques responsive utilisées dans le projet.
+- .env.example: template des variables d'environnement — permet de reconstituer l'environnement sans exposer les secrets.
+- Les scripts npm (db:migrate, db:seed, db:migrate:undo) sont documentés pour faciliter les mises à jour de schéma.`}</code></pre>
+            </aside>
         </Slide>
     );
 }

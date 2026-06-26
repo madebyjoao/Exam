@@ -50,6 +50,16 @@ if (!roles.includes(user.role))
                     </div>
                 </Fragment>
             </div>
+            <aside className="notes">
+                <pre><code>{`CP7 - Composants métier côté serveur:
+- AuthMiddleware: vérifie le JWT à chaque requête protégée, extrait le rôle et bloque si insuffisant (401).
+  Le secret JWT est dans .env — jamais exposé côté client.
+- Upload pipeline: Multer reçoit le fichier en mémoire (buffer), valide le type MIME et la taille (5MB max).
+  Sharp recompresse et redimensionne avant écriture sur disque — économise l'espace et normalise les images.
+- Controllers séparés: AuthController, BuilderController, PortfolioController, AdminPortfolioController,
+  OverviewController, UserController, UploadController, HomeController.
+- Défense en profondeur: validation Sequelize (modèle) + contrôle middleware (auth) + sanitisation Multer (upload).`}</code></pre>
+            </aside>
         </Slide>
     );
 }

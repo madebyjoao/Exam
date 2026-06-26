@@ -9,7 +9,7 @@ export default function ProjectSlide() {
                 <div className="bg-white/5 border border-white/10 px-8 py-5">
                     <p className="flex items-center gap-2 text-purple-400 font-semibold mb-3 text-lg"><Target  />Objectif</p>
                     <div as="p" className="text-slate-300 text-base">
-                        Permettre à des clients de créer, personnaliser et publier leur portfolio via une URL unique <code className="text-black">/u/:slug</code>
+                        Permettre à des clients de créer, personnaliser et publier leur portfolio via une URL unique <code className="text-blue-300">/u/:slug</code>
                     </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 px-8 py-5">
@@ -37,8 +37,17 @@ export default function ProjectSlide() {
                     </ul>
                 </div>
             </div>
-            <aside className='notes'>
-                bla bla
+            <aside className="notes">
+                <pre><code>{`Portfolio Builder — présentation du projet:
+- Objectif: SaaS de création de portfolio. Un client s'inscrit, configure son portfolio dans le Builder,
+  et obtient une URL publique /u/:slug accessible à n'importe qui sans connexion.
+- 3 rôles: CLIENT (gère son propre portfolio), ADMIN (accès au dashboard et gestion des utilisateurs),
+  Visiteur (lecture seule des portfolios publics via /u/:slug).
+- 3 templates de portfolio: chacun avec ses propres composants Navbar/Footer/Projects/Certificates.
+  Le client choisit le template et personnalise couleurs, police, sections dans le Builder.
+- Architecture full-stack découplée: front React sur :5173, API Express sur :3000.
+  Communication via Axios avec JWT Bearer token.
+- Upload d'images: photo de profil, images de projets, certificats — pipeline Multer + Sharp.`}</code></pre>
             </aside>
         </Slide>
     );
