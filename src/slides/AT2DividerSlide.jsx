@@ -1,11 +1,11 @@
 import { Slide } from '@revealjs/react';
 
 export default function AT2DividerSlide() {
-    const notes = `AT1 - Développer la partie front-end d’une application web ou web mobile sécurisée ->
-CP5 - Installer et configurer son environnement de travail en fonction du projet web ou web mobile ->
-CP6 - Maquetter des interfaces utilisateur web ou web mobile 
-CP7 - Réaliser des interfaces utilisateur statiques web ou web mobile ->
-CP8 - Développer la partie dynamique des interfaces utilisateur web ou web mobile`
+    const notes = `AT2 - Développer la partie back-end d’une application web ou web mobile sécurisée ->
+CP5 - Mettre en place une base de données relationnelle ->
+CP6 - Développer des composants d’accès aux données SQL et NoSQL ->
+CP7 - Développer des composants métier côté serveur ->
+CP8 - Documenter le déploiement d’une application dynamique web ou web mobile`
 
     return (
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">

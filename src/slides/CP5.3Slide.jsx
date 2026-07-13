@@ -25,7 +25,7 @@ Points notables du schéma :
             
             <div className="flex items-center pl-10 gap-3 mb-5">
                 <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
-                <p className="text-6xl font-extrabold text-black">MPD</p>
+                <p className="text-6xl font-extrabold text-black">MPD <span className="text-sm font-semibold">dossier projet — p. 19 · annexe p. 45</span></p>
             </div>
             <p className='text-sm pl-10 text-left text-black'>Modèle Physique de Données</p>
             

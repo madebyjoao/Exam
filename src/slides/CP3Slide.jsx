@@ -8,7 +8,7 @@ export default function CP3Slide() {
             CP3
           </span>
           <h2 className="text-3xl font-bold text-white">
-            Interfaces statiques
+            Interfaces statiques <span className='text-sm'>dossier projet — p. 14</span>
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-5 text-left text-sm">
@@ -17,7 +17,7 @@ export default function CP3Slide() {
               <p className="text-orange-400 font-semibold mb-3">
                 Html - Page Statique
               </p>
-              <Code language="js" lineNumbers="1-42">
+              <Code language="html" lineNumbers="1-42">
                 {`<div class="col col-left">
 
   <div>
@@ -66,7 +66,7 @@ export default function CP3Slide() {
           <div>
             <div>
               <p className="text-orange-400 font-semibold mb-3">
-                CSS - Interface Statique + mobile responsive
+                CSS - Interface Statique + responsive
               </p>
               <Code language="css" lineNumbers="1-44">
                 {`.brace { color: var(--punct); }

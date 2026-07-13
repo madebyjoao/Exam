@@ -26,8 +26,12 @@ import CP5_2Slide from './slides/CP5.2Slide';
 import CP2_1Slide from './slides/CP2.1Slide';
 import CP2_2Slide from './slides/CP2.2Slide';
 import CP5_3Slide from './slides/CP5.3Slide';
+import CP4_1Slide from './slides/CP4.1Slide';
 import Securite from './slides/Securite';
 import SEO from './slides/SEO';
+import JeuEssai from './slides/JeuEssai';
+import Veille from './slides/Veille';
+import CP3_1Slide from './slides/CP3.1Slide';
 
 
 export default function App() {
@@ -53,8 +57,9 @@ export default function App() {
             {/*  */}
             <ProjectSlide />
 
-            {/*  */}
+            {/* AT1 — front-end */}
             <AT1DividerSlide />
+            {/* AT2 — back-end */}
             <AT2DividerSlide />
 
             {/* Installer et configurer son environnement de travail en fonction du projet web ou web mobile */}
@@ -67,8 +72,10 @@ export default function App() {
             
             {/* Réaliser des interfaces utilisateur statiques web ou web mobile */}
             <CP3Slide />
+            <CP3_1Slide />
 
             
+
             {/* Mettre en place une base de données relationnelle */}
             <CP5_1Slide />
             <CP5_2Slide />
@@ -84,11 +91,21 @@ export default function App() {
 
             {/* Développer la partie dynamique des interfaces utilisateur web ou web mobile */}
             <CP4Slide />
+            {/* Résultat : screenshot du Template 3 rendu sur /u/three */}
+            <CP4_1Slide />
 
-            <Securite />            
+            {/* Sécurité transversale (OWASP) */}
+            <Securite />
 
+            {/* Veille sur les vulnérabilités de sécurité (exigence du référentiel) */}
+            <Veille />
+
+            {/* SEO, accessibilité, Lighthouse */}
             <SEO />
-            
+
+            {/* Jeu d'essai : données en entrée / attendues / obtenues (exigence du référentiel) */}
+            <JeuEssai />
+
             {/* Documenter le déploiement d’une application dynamique web ou web mobile */}
             <CP8Slide />
 

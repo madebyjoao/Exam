@@ -4,7 +4,7 @@ import { Globe, Server, Target, User2, Users, UserStar, Wallpaper } from 'lucide
 export default function ProjectSlide() {
     return (
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
-            <h2 className="text-4xl font-bold text-white mb-8">Présentation du projet</h2>
+            <h2 className="text-4xl font-bold text-white mb-8">Présentation du projet <span className='text-sm'>dossier projet — p. 6</span></h2>
             <div className="grid grid-cols-2 gap-6 text-left">
                 <div className="bg-white/5 border border-white/10 px-8 py-5">
                     <p className="flex items-center gap-2 text-purple-400 font-semibold mb-3 text-lg"><Target  />Objectif</p>

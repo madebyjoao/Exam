@@ -5,7 +5,7 @@ export default function CP7Slide() {
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div className="flex items-center gap-3 mb-4">
                 <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP7</span>
-                <h2 className="text-3xl font-bold text-white">Composants métier côté serveur</h2>
+                <h2 className="text-3xl font-bold text-white">Composants métier côté serveur <span className='text-sm'>dossier projet — p. 26 · 28-30</span></h2>
             </div>
             <div className="grid grid-cols-3 gap-4 text-sm text-left">
                 <div className="bg-white/5 border border-white/10  p-4">
@@ -41,14 +41,14 @@ if (!roles.includes(user.role))
                 <div>
                     <div className="bg-white/5 border border-white/10  p-4">
                         <p className="text-green-400 font-semibold mb-2">🛣️ Routes Express</p>
-                        <ul className="text-slate-300 text-xs space-y-1 list-none">
+                        <ul className="text-slate-100 text-xs space-y-1 list-none">
                             <li><code>POST /auth/login</code></li>
                             <li><code>GET /portfolio/:slug</code></li>
                             <li><code>POST /builder/upload</code></li>
                             <li><code>GET /admin/users</code></li>
                             <li><code>POST /auth/checkToken</code></li>
                         </ul>
-                        <p className="text-slate-500 text-xs mt-2">Multer (5 MB max) + middleware auth sur chaque route protégée</p>
+                        <p className="text-slate-300 text-xs mt-2">Multer (5 MB max) + middleware auth sur chaque route protégée</p>
                     </div>
                 </div>
             </div>

@@ -1,66 +1,98 @@
-import { Slide, Fragment } from '@revealjs/react';
-import { Atom, Database, HardDriveDownload, Hexagon, Palette, RefreshCcw, Sprout, Superscript, Zap } from 'lucide-react';
+import { Slide } from '@revealjs/react';
+import { KeyRound, BadgeCheck, ShieldCheck, Database, Bug, ImageUp } from 'lucide-react';
+
+const items = [
+    {
+        icon: KeyRound,
+        color: 'text-orange-400',
+        title: 'Mots de passe — bcrypt',
+        points: [
+            'Hachage bcrypt, jamais stockés en clair',
+            'Algorithme volontairement lent → anti brute-force',
+        ],
+    },
+    {
+        icon: BadgeCheck,
+        color: 'text-blue-400',
+        title: 'Authentification — JWT',
+        points: [
+            'Token signé, aucune donnée sensible dans le payload',
+            "Messages d'erreur identiques → anti-énumération de comptes",
+        ],
+    },
+    {
+        icon: ShieldCheck,
+        color: 'text-green-400',
+        title: "Contrôle d'accès",
+        points: [
+            'Rôles CLIENT / ADMIN vérifiés par middleware',
+            'CheckSlug : propriété de la ressource, sinon 403 (dossier p. 26 · 31)',
+        ],
+    },
+    {
+        icon: Database,
+        color: 'text-purple-400',
+        title: 'Injection SQL',
+        points: [
+            'ORM Sequelize → requêtes paramétrées',
+            'Jamais de concaténation de valeurs utilisateur',
+        ],
+    },
+    {
+        icon: Bug,
+        color: 'text-red-700',
+        title: 'XSS',
+        points: [
+            'React échappe le contenu inséré dans le DOM',
+            'Validation Zod (front) + contrôles back, pas de dangerouslySetInnerHTML',
+            'title: z.string().min(1, "title is required")',
+        ],
+    },
+    {
+        icon: ImageUp,
+        color: 'text-cyan-400',
+        title: 'Upload de fichiers',
+        points: [
+            'Limite 5 Mo + contrôle du type MIME',
+            'Renommage UUID + re-encodage Sharp (neutralise les fichiers déguisés)',
+        ],
+    },
+];
 
 export default function Securite() {
-
-    const notes =`- Frontend: - reactjs project build with vite, 
-    - use of React-router dependency for for our navigation router;
-    - Tanstack Query dependency because it eliminates the need for manual data fetching;
-- Backend: -NodeJs pour une question de convenience est la stack que je me sent le plus confortable;
-- use Express.js because its a high-performance framework for building web APIs and server-side applications in Node.js;
-- use MySQL + Sequelize pour une question de securite vue que sequilize donne sanitazation des donnes, 
-system de migration, gere les relation entre table (hasMany ou belongsTo)
-     JWT auth, Multer, Sharp
-- Tooling: Nodemon, ESLint
-    
-    `
+    const notes = `Sécurité — transversale (security by design), bonnes pratiques OWASP :
+- bcrypt : hash + salt, lent par design → brute-force coûteux. Jamais de mot de passe en clair.
+- JWT : signé avec JWT_SECRET (.env). Le payload est encodé en base64, PAS chiffré → aucune donnée sensible dedans.
+- Anti-énumération : "email inconnu" et "mot de passe incorrect" renvoient le même message.
+- Contrôle d'accès : AuthMiddleware (rôle) + CheckSlug (propriété) → un client ne modifie que SON portfolio (403 sinon).
+  CheckSlug dans le dossier : code des routes p. 26, diagramme du rendu public p. 31, section sécurité 14.b p. 35.
+- SQL : Sequelize = requêtes paramétrées, les valeurs ne sont jamais concaténées dans le SQL.
+- XSS : React échappe par défaut ; validation Zod côté front (UX) + validation back (la vraie sécurité).
+- Upload : 5 Mo max, MIME vérifié, nom UUID (pas d'écrasement possible), Sharp re-encode → un "faux jpg" malveillant ne survit pas à la conversion.
+Question probable du jury : JWT en localStorage → exposé en cas de XSS ; alternative = cookie httpOnly (mais CSRF à gérer). Réponse : React limite fortement le XSS, et c'est une piste d'amélioration identifiée.`;
 
     return (
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
-            <div className="flex items-center gap-3 mb-6">
-                <span className="bg-green-500/20 text-green-400 border border-green-400/30 px-3 py-1 rounded-full text-sm font-bold">CP1</span>
-                <h2 className="text-3xl font-bold text-white">Environnement de travail</h2>
+            <div className="flex items-center gap-3 mb-5">
+                <span className="bg-red-500/20 text-red-400 border border-red-400/30 px-3 py-1 rounded-full text-sm font-bold">Sécurité</span>
+                <h2 className="text-3xl font-bold text-white">Security by design — OWASP <span className='text-sm'>dossier projet — p. 35</span></h2>
             </div>
-            <div className="grid grid-cols-3 gap-4 text-left">
-                <div asChild>
-                    <div className="bg-white/5 border border-white/10 p-4 min-h-60">
-                        <p className="text-blue-500 font-semibold mb-2">Front-end</p>
-                        <ul className="text-slate-300 text-sm space-y-1 list-none">
-                            <li className="flex items-center gap-2"><Zap /> Vite — build tool</li>
-                            <li className="flex items-center gap-2"><Atom /> ReactJS</li>
-                            <li className="flex items-center gap-2"><Palette /> Tailwind CSS</li>
+            <div className="grid grid-cols-3 gap-4 text-left text-sm">
+                {items.map(({ icon: Icon, color, title, points }) => (
+                    <div key={title} className="bg-white/5 border border-white/10 p-4">
+                        <p className={`flex items-center gap-2 font-semibold mb-2 ${color}`}>
+                            <Icon size={18} /> {title}
+                        </p>
+                        <ul className="text-slate-300 text-xs space-y-1 list-none">
+                            {points.map((p) => (
+                                <li key={p}>{p}</li>
+                            ))}
                         </ul>
                     </div>
-                </div>
-                <div asChild>
-                    <div className="bg-white/5 border border-white/10 p-4 min-h-60">
-                        <p className="text-red-600 font-semibold mb-2">Back-end</p>
-                        <ul className="text-slate-300 text-sm space-y-1 list-none">
-                            <li className="flex items-center gap-2"><Hexagon /> Node.js</li>
-                            <li className="flex items-center gap-2"><Superscript />Express 5</li>
-                            <li className="flex items-center gap-2"><RefreshCcw /> Nodemon</li>
-                        </ul>
-                    </div>
-                </div>
-                <div asChild>
-                    <div className="bg-white/5 border border-white/10 py-4 min-h-60">
-                        <p className="text-purple-600 font-semibold mb-0">Base de données</p>
-                        <ul className="text-slate-300 text-sm space-y-1 list-none px-4">
-                            <li className="flex items-center gap-2"><Database />MySQL + Sequelize-cli</li>
-                            <li className="flex items-center gap-2"><Sprout /> Seeders</li>
-                            <li className="flex items-center gap-2"><HardDriveDownload /> Migrations</li>
-                        </ul>
-                    </div>
-                </div>
+                ))}
             </div>
-             <aside className='notes'>
-
-                <pre>
-                    <code>
-                        {notes}
-                    </code>
-                </pre>
-
+            <aside className="notes">
+                <pre><code>{notes}</code></pre>
             </aside>
         </Slide>
     );

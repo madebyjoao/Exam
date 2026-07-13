@@ -8,19 +8,19 @@ export default function DemoSlide() {
                 <div className="grid grid-cols-3 gap-6 mt-4 text-center">
                     {[
                         ['🌐', 'Page publique', 'localhost:5173'],
-                        ['🔐', 'Login client', 'client2@mbjtest.com'],
+                        ['🔐', 'Login client', 'three@mbjtest.com'],
                         ['🛠️', 'Builder', '/builder'],
-                        ['👤', 'Portfolio', '/u/:slug'],
-                        ['🏅', 'Certificats', '/u/:slug/certificates'],
+                        ['👤', 'Portfolio', '/u/three'],
+                        ['🏅', 'Certificats', '/u/three/certificates'],
                         ['📊', 'Admin', '/admin'],
                     ].map(([icon, label, sub]) => (
-                        <Fragment key={label} asChild animation="fade-up">
-                            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div key={label} asChild animation="fade-up">
+                            <div className="bg-white/5 border border-white/10 p-4">
                                 <div className="text-3xl mb-2">{icon}</div>
                                 <p className="text-white font-semibold text-sm">{label}</p>
-                                <p className="text-slate-500 text-xs mt-1">{sub}</p>
+                                <p className="text-black text-xs mt-1">{sub}</p>
                             </div>
-                        </Fragment>
+                        </div>
                     ))}
                 </div>
             </div>

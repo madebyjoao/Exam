@@ -19,7 +19,7 @@ system de migration, gere les relation entre table (hasMany ou belongsTo)
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div className="flex items-center gap-3 mb-6">
                 <span className="bg-green-500/20 text-green-400 border border-green-400/30 px-3 py-1 rounded-full text-sm font-bold">CP1</span>
-                <h2 className="text-3xl font-bold text-white">Environnement de travail</h2>
+                <h2 className="text-3xl font-bold text-white">Environnement de travail <span className='text-sm'>dossier projet — p. 10-11</span></h2>
             </div>
             <div className="grid grid-cols-3 gap-4 text-left">
                 <div asChild>

@@ -1,127 +1,76 @@
-import { Slide, Fragment, Code } from '@revealjs/react';
+import { Slide, Code } from '@revealjs/react';
 
 export default function CP4Slide() {
+    const notes = `CP4 - Interfaces dynamiques — rendu dynamique du template (Mission n°3) :
+- useParams (React Router) extrait le slug de l'URL /u/:slug.
+- useQuery (TanStack Query) interroge l'API publique et met la réponse en cache (queryKey ["portfolio", slug]).
+  Gestion des états isPending / isError / success → feedback immédiat à l'utilisateur.
+- Le switch sur data.portfolio.template rend dynamiquement le bon composant (TemplateOne/Two/Three)
+  sans dupliquer la logique de récupération des données.
+- Seuls les portfolios publiés (is_published) sont renvoyés par l'API → 403 sinon.
+
+À mentionner à l'oral (déplacé de l'ancienne slide) :
+- React Router : routes imbriquées avec layouts (PublicLayout, PortfolioLayout, BuilderLayout),
+  routes privées protégées par RoleGuard (rôles ADMIN/CLIENT).
+- TanStack Query : staleTime Infinity + invalidation ciblée du cache après chaque mutation
+  (queryClient.invalidateQueries).
+- Axios : intercepteur qui injecte automatiquement le token JWT (Bearer) sur chaque requête sortante.`;
+
     return (
-        <Slide
-            background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
-            <div                
-                className="flex items-center gap-3 mb-5">
+        <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
+            <div className="flex items-center gap-3 mb-5">
                 <span className="bg-green-500/20 text-green-400 border border-green-400/30 px-3 py-1 rounded-full text-sm font-bold">CP4</span>
-                <h2 className="text-3xl font-bold text-white">Interfaces dynamiques</h2>
+                <h2 className="text-3xl font-bold text-white">Interfaces dynamiques — rendu du template <span className='text-sm'>dossier projet — p. 31-33</span></h2>
             </div>
-            <div className="grid grid-cols-2 grid-rows-[auto_auto] gap-3 text-left text-sm ">
-                {/* Row 1, Col 1 — TanStack Query (first half) */}
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10  p-4 col-span-2 h-fit">
-                        <p className="text-purple-400 font-semibold mb-2">TanStack Query</p>
-                        <div className='grid grid-cols-2 grid-rows-1 h-fit'>
-                            <div className="">                            
-                                <ul className="text-slate-300 space-y-1 list-none">
-                                    <li>Cache des requêtes: (staleTime: Infinity)</li>
-                                    <li>Invalidation ciblée après mutation</li>
-                                </ul>
-                            </div>
-                            <div className="col-start-2">
-                                <ul className="text-slate-300 list-none">
-                                    <li>States loading / error / success</li>
-                                    <li>RoleGuard — vérification token côté client</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </Fragment>
+            <div className="grid grid-cols-2 gap-5 text-left text-sm">
+                <div className="bg-white/5 border border-white/10 p-3">
+                    <p className="text-purple-400 font-semibold mb-2">Sélection dynamique du template — <code>/u/:slug</code></p>
+                    <Code language="jsx" lineNumbers="1-24">
+{`const { slug } = useParams();
 
-
-                {/* Row 2, Col 1 — React Router */}
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10  p-2 row-start-2 col-start-1 h-fit">
-                        <p className="text-blue-400 font-semibold mb-2">Routage — React Router</p>
-                        <Code language="jsx">
-{`<BrowserRouter>
-    <QueryClientProvider client={queryClient}>
-        <Routes>
-            {/* Routes publiques */}
-            <Route path="/" element={<PublicLayout />}>
-                <Route index element={<Home />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/auth/login" element={<Login />} />
-                <Route path="/auth/register" element={<Register />} />
-            </Route>
-
-            {/* CV standalone page */}
-            <Route path="/cv" element={<CV />} />
-
-            {/* Routes portfolio */}
-            <Route path="/u" element={<PortfolioLayout />}>
-                <Route path=":slug" element={<Portfolio />} />
-                <Route path=":slug/certificates" element={<Certificates />} />
-            </Route>
-
-            {/* Routes privées */}
-            <Route
-                path="/builder"
-                element={<RoleGuard allowedRoles={["ADMIN", "CLIENT"]}>
-                            <BuilderLayout />
-                        </RoleGuard>} >
-                <Route index element={<Builder />} />
-                <Route path="projects" element={<BuilderProjects />} />
-                <Route
-                    path="certificates"
-                    element={<BuilderCertificates />}
-                />
-                <Route path="preview" element={<BuilderPreview />} />
-            </Route>
-        </Routes>
-    </QueryClientProvider>
-</BrowserRouter>`}
-                        </Code>
-                    </div>
-                </Fragment>
-
-                {/* Row 2, Col 2 — Axios */}
-                <Fragment asChild>
-                    <div className="bg-white/5 border border-white/10  p-3 row-start-2 col-start-2 h-fit">
-                        <p className="text-green-400 font-semibold mb-2">Axios — intercepteur JWT</p>
-                        <Code language="js">
-{`import axios from "axios";
-
-export const BASE_URL = "http://localhost:3000";
-
-const instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 10000,
+const { isPending, isError, data, error } = useQuery({
+    queryKey: ["portfolio", slug],
+    queryFn: () => getPortfolioBySlug(slug),
+    enabled: !!slug,
 });
 
-instance.interceptors.request.use(
-    async (config) => {
-        const token = localStorage.getItem("token");
+if (isPending) return <div>Chargement en cours...</div>;
+if (isError)   return <div>Erreur : {error.message}</div>;
 
-        if (token !== null) {
-            config.headers.Authorization = \`Bearer \${token}\`;
-        }
+const template = data.portfolio.template;
 
-        return config;
-    },
-    (error) => {
-        console.log("une erreur est survenue:", error);
-        return Promise.reject(new Error(error));
-    },
-);
+switch (template) {
+    case 1:
+        return <TemplateOne />;
+    case 2:
+        return <TemplateTwo />;
+    case 3:
+        return <TemplateThree />;
+    default:
+        return <h1>no template</h1>;
+}`}
+                    </Code>
+                </div>
+                <div className="flex flex-col gap-3">
+                    {[
+                        ['1', 'useParams', 'React Router extrait le slug de l’URL /u/:slug'],
+                        ['2', 'useQuery', 'TanStack Query interroge l’API et met la réponse en cache'],
+                        ['3', 'États', 'isPending / isError / success → feedback utilisateur immédiat'],
+                        ['4', 'switch', 'Rendu conditionnel du template choisi par le client (1, 2 ou 3)'],
+                    ].map(([n, title, desc]) => (
+                        <div key={n} className="bg-white/5 border border-white/10 p-1 flex items-start gap-3">
+                            <span className="w-6 h-6 bg-green-500/30 text-green-300 rounded-full flex items-center justify-center text-xs font-bold shrink-0">{n}</span>
+                            <div>
+                                <p className="text-black text-lg font-semibold">{title}</p>
+                                <p className="text-white text-md">{desc}</p>
+                            </div>
+                        </div>
+                    ))}
 
-export default instance;`}
-                        </Code>
-                    </div>
-                </Fragment>
+                </div>
             </div>
             <aside className="notes">
-                <pre><code>{`CP4 - Interfaces dynamiques:
-- TanStack Query: gère le cache côté client avec staleTime: Infinity pour éviter des requêtes inutiles.
-  Après chaque mutation (create/update/delete), on invalide le cache ciblé via queryClient.invalidateQueries.
-  Gestion des états loading/error/success pour afficher des feedbacks à l'utilisateur.
-- React Router: structure de routes imbriquées avec layouts (PublicLayout, BuilderLayout, AdminLayout, PortfolioLayout).
-  Routes privées protégées par RoleGuard qui vérifie le token JWT stocké en localStorage.
-- Axios intercepteur: injecte automatiquement le token Bearer sur chaque requête sortante.
-  Sépare la logique d'authentification du reste des composants.`}</code></pre>
+                <pre><code>{notes}</code></pre>
             </aside>
         </Slide>
     );

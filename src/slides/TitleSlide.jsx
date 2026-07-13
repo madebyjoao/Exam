@@ -13,6 +13,9 @@ export default function TitleSlide() {
                 <p className="text-2xl text-slate-400 max-w-xl text-center">
                     Application full-stack de création et publication de portfolios professionnels
                 </p>
+                <p className="text-lg text-slate-300">
+                    Présenté par <strong className="text-white">Joao Silva</strong> — Session 2026
+                </p>
                 <div className="flex gap-3 mt-4">
                     {['React', 'NodeJS', 'Express', 'MySQL', 'Sequelize', 'Tailwind CSS'].map(t => (
                         <span key={t} className="px-3 py-1 bg-white/10 rounded-full text-white text-sm">{t}</span>
