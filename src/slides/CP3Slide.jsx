@@ -18,16 +18,16 @@ export default function CP3Slide() {
                 Html - Page Statique
               </p>
               <Code language="html" lineNumbers="1-42">
-                {`<div class="col col-left">
+                {`<section class="col col-left">
 
-  <div>
-    <span class="kw">public static class</span>
-    <span class="class-name">EXPÉRIENCES</span>
-  </div>
+  <article>
+    <h2 class="kw">public static class</h2>
+    <h3 class="class-name">EXPÉRIENCES</h3>
+  </article>
 
   <div class="brace">{</div>
 
-  <div class="method">
+  <article class="method">
     <div class="method-sig">
       <span class="kw">public void</span>&nbsp;
       <span class="fn">FreelanceDev</span><span class="pt">()</span>
@@ -51,15 +51,15 @@ export default function CP3Slide() {
       </div>
     </div>
     <div class="brace">}</div>
-    <div class="comment-block">
+    <article class="comment-block">
       <span class="cbullet">Conception et développement web</span>
       <span class="cbullet">Analyse des besoins client</span>
       <span class="cbullet">Intégration front-end (HTML/CSS/React)</span>
       <span class="cbullet">Backend (Node.js / Express)</span>
       <span class="cbullet">Déploiement et mise en ligne</span>
-    </div>
-  </div>
-</div>`}
+    </article>
+  </article>
+</section>`}
               </Code>
             </div>
           </div>

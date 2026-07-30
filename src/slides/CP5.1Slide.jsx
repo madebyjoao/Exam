@@ -24,11 +24,20 @@ Points notables du schéma :
             backgroundColor='white'
             backgroundImage={MCD} backgroundSize="69%" backgroundPosition="center" backgroundRepeat="no-repeat">
             
-            <div className="flex items-center gap-3 pl-10 mb-5">
-                <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
-                <p className="text-6xl font-extrabold text-black">MCD <span className="text-sm font-semibold">dossier projet — p. 17 · annexe p. 43</span></p>
+            <div className="relative flex flex-col items-center gap-3 pl-10 mb-5">
+                <div className='absolute left-10 flex items-center gap-2'>
+                    <span className="bg-purple-500/20 text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full text-sm font-bold">CP5</span>
+                    <p className="text-6xl font-extrabold text-black">MCD <span className="text-sm font-semibold">dossier — p. 17 · annexe p. 43</span></p>
+                </div>
+                <div className='absolute left-10 top-25 flex items-center gap-2'>
+                    <p className='text-sm pl-10 text-left text-black'>Modèle Conceptuel des Données</p>
+                    
+                </div>
+                
+                
             </div>
-            <p className='text-sm pl-10 text-left text-black'>Modèle Conceptuel des Données</p>
+            
+            
             
             <aside className="notes text-lg">
                 <pre><code>{notes}</code></pre>
