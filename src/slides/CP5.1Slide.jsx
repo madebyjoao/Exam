@@ -30,11 +30,8 @@ Points notables du schéma :
                     <p className="text-6xl font-extrabold text-black">MCD <span className="text-sm font-semibold">dossier — p. 17 · annexe p. 43</span></p>
                 </div>
                 <div className='absolute left-10 top-25 flex items-center gap-2'>
-                    <p className='text-sm pl-10 text-left text-black'>Modèle Conceptuel des Données</p>
-                    
+                    <p className='text-sm pl-10 text-left text-black'>Modèle Conceptuel des Données</p>                    
                 </div>
-                
-                
             </div>
             
             

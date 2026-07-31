@@ -28,13 +28,19 @@ if (!roles.includes(user.role))
                     <div className="bg-white/5 border border-white/10  p-4">
                         <p className="text-blue-400 font-semibold mb-2">🖼️ Upload & Sharp</p>
                         <Code language="js">
-{`await sharp(file.buffer)
-  .resize(800, 600, {
-    fit: "inside",
-    withoutEnlargement: true
-  })
-  .jpeg({ quality: 80 })
-  .toFile(uploadPath);`}
+{`// Configuration Multer
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 
+} });
+
+// Traitement Sharp avant écriture disque
+await sharp(picture.buffer)
+    .resize(600, 800, { 
+        fit: "inside", withoutEnlargement: true 
+    })
+    .jpeg({ quality: 80 })
+    .toFile(uploadPath);`}
                         </Code>
                     </div>
                 </div>

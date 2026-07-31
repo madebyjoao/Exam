@@ -46,7 +46,7 @@ Cahier de tests complet en annexe du dossier (page 48).`;
         <Slide background="linear-gradient(135deg, #183d3d 0%, #93b1a6 100%)">
             <div className="flex items-center gap-3 mb-5">
                 <span className="bg-cyan-500/20 text-cyan-400 border border-cyan-400/30 px-3 py-1 rounded-full text-sm font-bold">Tests</span>
-                <h2 className="text-3xl font-bold text-white">Jeu d'essai — création d'un projet <span className='text-sm'>dossier projet — p. 36</span></h2>
+                <h2 className="text-3xl font-bold text-white">Cahier des tests — création d'un projet <span className='text-sm'>dossier projet — p. 36</span></h2>
             </div>
             <div className="text-left text-xs">
                 <table className="w-full border-collapse">
